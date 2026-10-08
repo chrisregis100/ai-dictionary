@@ -29,10 +29,10 @@ const validData = {
 };
 
 describe("dictionnaire publié", () => {
-  it("accepte les fiches de la section Le modèle", () => {
+  it("accepte les fiches des sept sections du curriculum", () => {
     const report = loadDictionary();
     expect(report.issues).toEqual([]);
-    expect(report.entries).toHaveLength(16);
+    expect(report.entries).toHaveLength(71);
   });
 });
 
