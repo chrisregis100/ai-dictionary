@@ -12,7 +12,7 @@ interface SiteHeaderProps {
 export function SiteHeader({ entries }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-paper/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center gap-3 px-4 py-3">
+      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 px-4 py-3 lg:px-6">
         <Link
           href="/"
           className="link-ink inline-flex items-center gap-2 font-serif text-lg italic text-ink"
@@ -22,7 +22,7 @@ export function SiteHeader({ entries }: SiteHeaderProps) {
         </Link>
         <nav aria-label="Pages" className="flex items-center gap-4 text-sm">
           <Link href="/" className="link-ink text-sage">
-            Parcours
+            Dictionnaire
           </Link>
           <Link href="/recherche" className="link-ink text-sage">
             Recherche

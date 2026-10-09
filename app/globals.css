@@ -156,13 +156,44 @@ a {
   background: color-mix(in srgb, var(--ink) 16%, transparent);
 }
 
+.hero-index-panel {
+  background-color: var(--paper-kraft);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 10px,
+    color-mix(in srgb, var(--ink) 7%, transparent) 10px,
+    color-mix(in srgb, var(--ink) 7%, transparent) 11px
+  );
+}
+
+.heading-anchor {
+  margin-inline-start: 0.4em;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85em;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--sage);
+  text-decoration: none;
+  background-image: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.entry-body h2:hover .heading-anchor,
+.entry-body h2:focus-within .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   .link-ink,
-  .paper-card {
+  .paper-card,
+  .heading-anchor {
     transition: none;
   }
 

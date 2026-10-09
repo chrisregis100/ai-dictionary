@@ -21,7 +21,7 @@ related:
 - `term` reste le libellé anglais, affiché tel quel.
 - `slug` est le nom du fichier, en minuscules et tirets.
 - `section` est l'identifiant du curriculum (`model`, `sessions`, `tools`, `failures`, `handoffs`, `memory`, `patterns`).
-- `description` tient en 140 caractères. Elle sert la carte du sentier et la recherche.
+- `description` tient en 140 caractères. Elle sert la carte du dictionnaire et la recherche.
 - `sourceTerm` est le nom du fichier upstream, sans `.md`, pour la veille.
 - `related` liste des slugs qui existent déjà.
 

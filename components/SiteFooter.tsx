@@ -4,7 +4,7 @@ import Link from "next/link";
 export function SiteFooter() {
   return (
     <footer className="mt-auto border-t border-line bg-paper-kraft">
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-12 lg:px-6">
         <p className="ornament text-xs" aria-hidden>
           ※
         </p>
@@ -33,7 +33,7 @@ export function SiteFooter() {
           className="flex flex-wrap gap-x-5 gap-y-2 text-sm"
         >
           <Link href="/" className="link-ink text-sage">
-            Parcours
+            Dictionnaire
           </Link>
           <Link href="/recherche" className="link-ink text-sage">
             Recherche

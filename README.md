@@ -9,7 +9,7 @@ pnpm install
 pnpm dev
 ```
 
-Le parcours est sur `/`. Une fiche est sur `/notions/token`. La recherche partageable est sur `/recherche?q=cache`.
+Le dictionnaire est sur `/`. Une fiche est sur `/notions/token`. La recherche partageable est sur `/recherche?q=cache`, et l'accueil filtre aussi via `/?q=`.
 
 ## Contenu
 
@@ -41,8 +41,8 @@ pnpm build
 pnpm test:e2e
 ```
 
-`pnpm test` valide le schéma, les slugs, les liens et le curriculum. `pnpm test:e2e` ouvre le parcours, suit une notion liée, cherche un terme, puis vérifie que « compris » survit au rechargement.
+`pnpm test` valide le schéma, les slugs, les liens et le curriculum. `pnpm test:e2e` ouvre l'accueil, filtre le dictionnaire, ouvre une fiche, puis suit une notion liée.
 
 ## Déployer
 
-Le projet est prévu pour Vercel (`vercel.json`). Branche le dépôt : Vercel détecte Next.js, installe avec pnpm et lance `pnpm build`. Pas de base de données. La progression « compris » reste dans le navigateur.
+Le projet est prévu pour Vercel (`vercel.json`). Branche le dépôt : Vercel détecte Next.js, installe avec pnpm et lance `pnpm build`. Pas de base de données.

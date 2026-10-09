@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { CopyPageButton } from "@/components/copy-page-button";
 import { EntryBody } from "@/components/entry-body";
-import { LemmaHeading } from "@/components/LemmaHeading";
 import { RelatedTerms } from "@/components/related-terms";
-import { UnderstoodButton } from "@/components/understood-button";
-import { sectionById } from "@/content/curriculum";
+import { TermSidebar } from "@/components/term-sidebar";
+import { curriculum } from "@/content/curriculum";
 import { getEntries, getEntry } from "@/lib/dictionary";
 
 interface NotionPageProps {
@@ -28,39 +27,48 @@ export async function generateMetadata({
 
 export default async function NotionPage({ params }: NotionPageProps) {
   const { slug } = await params;
-  const entry = getEntry(slug);
+  const entries = getEntries();
+  const entry = entries.find((item) => item.slug === slug);
   if (!entry) notFound();
 
-  const section = sectionById(entry.section);
-  const bySlug = new Map(getEntries().map((item) => [item.slug, item]));
+  const bySlug = new Map(entries.map((item) => [item.slug, item]));
   const related = entry.related.flatMap((relatedSlug) => {
     const target = bySlug.get(relatedSlug);
     return target
       ? [{ slug: target.slug, term: target.term, description: target.description }]
       : [];
   });
+  const navSections = curriculum.map((section) => ({
+    id: section.id,
+    title: section.title,
+    terms: section.terms.flatMap((termSlug) => {
+      const item = bySlug.get(termSlug);
+      return item ? [{ slug: item.slug, term: item.term }] : [];
+    }),
+  }));
+  const pageMarkdown = `# ${entry.term}\n\n${entry.description}\n\n${entry.body.trim()}\n`;
 
   return (
-    <article className="space-y-8">
-      <header className="space-y-5">
-        <p className="text-sm text-muted">
-          <Link href="/" className="link-ink text-sage">
-            Parcours
-          </Link>
-          <span aria-hidden> · </span>
-          {section.title}
-        </p>
-        <LemmaHeading term={entry.term} />
-        <p className="max-w-prose text-lg leading-8 text-ink/85">
-          {entry.description}
-        </p>
-        <UnderstoodButton slug={entry.slug} />
-      </header>
-      <p className="ornament text-xs" aria-hidden>
-        ※
-      </p>
-      <EntryBody markdown={entry.body} />
-      <RelatedTerms terms={related} />
-    </article>
+    <div className="lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start lg:gap-10">
+      <TermSidebar
+        sections={navSections}
+        currentSection={entry.section}
+        currentSlug={entry.slug}
+      />
+      <article className="min-w-0 space-y-8 lg:border-l lg:border-line lg:pl-10">
+        <header className="space-y-5">
+          <h1 className="font-serif text-[clamp(2.6rem,7vw,4.4rem)] leading-[1.08] tracking-[-0.03em] text-ink">
+            {entry.term}
+          </h1>
+          <p className="max-w-3xl text-xl leading-8 text-muted md:text-2xl">
+            {entry.description}
+          </p>
+          <CopyPageButton markdown={pageMarkdown} />
+        </header>
+        <hr className="border-line" />
+        <EntryBody markdown={entry.body} />
+        <RelatedTerms terms={related} />
+      </article>
+    </div>
   );
 }

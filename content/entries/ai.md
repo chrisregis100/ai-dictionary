@@ -2,28 +2,36 @@
 term: AI
 slug: ai
 section: model
-description: "Étiquette mobile : elle désigne ce que les machines savent faire d'impressionnant, pas une technique précise."
+description: "Étiquette mouvante, et non une technologie. Aujourd’hui, elle désigne les grands modèles de langage."
 sourceTerm: AI
 related:
   - model
   - training
 ---
 
-AI ne nomme pas une pièce de la machine. C'est une étiquette qu'on déplace vers ce qui vient de devenir impressionnant.
+AI est une étiquette mouvante, et non une technologie. Le terme « IA » ne désigne pas une chose figée, à l’instar de « [modèle](/notions/model) » ou de « [jeton (token)](/notions/token) » ; il pointe vers tout ce que les ordinateurs parviennent à accomplir de nouveau et de manière impressionnante. À l’heure actuelle, il désigne les grands modèles de langage. Par le passé, il a désigné des choses très différentes :
 
-Le mot a déjà couvert des programmes de logique, des systèmes de règles écrites à la main, des filtres statistiques, puis la reconnaissance d'images. Aujourd'hui, dans une équipe produit, il désigne le plus souvent un [modèle](/notions/model) de langue. Ces objets ne se règlent pas, ne tombent pas en panne et ne se facturent pas de la même façon.
+| Époque | Ce que « IA » désignait |
+| --- | --- |
+| Années 1950 | Raisonnement symbolique — démonstrateurs de théorèmes, programmes de jeu de dames. |
+| Années 1960-70 | Programmes symboliques fondés sur des règles — ELIZA, SHRDLU. |
+| Années 1980 | Systèmes experts — des milliers de règles « si... alors... » écrites à la main pour encoder l’expertise humaine. |
+| Années 1990 | Recherche dans des arbres de jeu — Deep Blue battant Kasparov (1997). Les chercheurs évitaient totalement le terme « IA ». |
+| Années 2000 | Apprentissage automatique statistique — filtres anti-spam, systèmes de recommandation. Toujours vendus sous l’appellation « apprentissage automatique » (machine learning) plutôt qu’« IA ». |
+| Années 2010 | Apprentissage profond (deep learning) — reconnaissance d’images (AlexNet, 2012), AlphaGo (2016). |
+| Années 2020 | Grands modèles de langage — ChatGPT (2022) a fait en sorte que « IA » devienne synonyme d’« agents conversationnels » (chatbots). |
 
-Le déplacement a une cause simple. Quand une technique devient fiable, on lui donne un nom plus sec et on cesse de l'appeler AI. L'étiquette avance vers le problème encore flou. Deux phrases qui emploient le même mot peuvent donc parler de deux époques, et aucune ne sert de preuve pour l'autre.
+Ce glissement de sens s’opère selon un mécanisme connu, parfois appelé « effet IA » : dès qu’une technique fonctionne de manière fiable, elle est rebaptisée — ce n’est « que » de la recherche, « que » des statistiques — et le terme « IA » se déplace vers le prochain défi non résolu. Ce constat n’est pas nouveau. Bertram Raphael l’exprimait ainsi en 1971 : « L’IA est un terme générique désignant des problèmes que nous ne savons pas encore résoudre correctement par ordinateur. » La version de Larry Tesler, datant d’environ 1979, est la suivante : « L’intelligence, c’est tout ce que les machines n’ont pas encore accompli. »
 
-Dans un diagnostic, remplace AI par la pièce dont tu parles : le modèle, l'outil autour, la consigne, les documents fournis. « AI coding » peut rester le nom de la pratique. « L'AI s'est trompée » ne dit pas où chercher.
+C’est pourquoi les discussions sur l’IA passent si souvent à côté du sujet. Une affirmation telle que « l’IA ne sait pas raisonner » ou « l’IA est surestimée » porte en elle une marque temporelle implicite : elle peut concerner les systèmes experts, les classificateurs d’images des années 2010 ou les grands modèles de langage (LLM) du mois dernier, et chaque référence conduit à une conclusion différente. Lorsque la discussion sur l’IA piétine, la solution consiste généralement à remplacer ce terme générique par celui qui désigne précisément l’élément visé : le modèle, le [dispositif d’encadrement (harness)](/notions/harness), l’[agent](/notions/agent) ou le [contexte](/notions/context) fourni.
 
 ## À éviter
 
-- AI à la place d'un composant, dans un ticket ou un post-mortem.
-- Traiter deux usages du mot, à dix ans d'écart, comme le même système.
+- Utiliser « IA » dans une affirmation technique. Désignez plutôt l’élément spécifique concerné.
+- Dire « l’IA hallucine ». L’expression « codage par IA » peut décrire la pratique.
 
 ## En situation
 
-> « Le comité demande si l'AI peut trier les tickets. »
+> « Le CTO veut savoir si l’IA pourrait gérer la file d’attente de tri. »
 
-> « Reformule avant d'estimer. Ils parlent sans doute d'un modèle branché sur l'outil de tickets. AI, seul, ne décrit pas le système. »
+> « Reformulez cela avant de définir le périmètre du projet : elle fait référence à un LLM intégré dans un dispositif d’encadrement et ayant accès au système de gestion des tickets. « IA » seul ne constitue pas une spécification. »

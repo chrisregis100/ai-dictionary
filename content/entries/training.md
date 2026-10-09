@@ -2,7 +2,7 @@
 term: Training
 slug: training
 section: model
-description: "Calcul long, chez le fournisseur, qui ajuste les paramètres pour mieux prédire le token suivant."
+description: "Processus coûteux, fait une fois par le fournisseur, qui ajuste les paramètres pour prédire le jeton suivant."
 sourceTerm: Training
 related:
   - parameters
@@ -10,21 +10,19 @@ related:
   - model
 ---
 
-L'entraînement est le passage qui fixe les [paramètres](/notions/parameters) d'un [modèle](/notions/model). Le fournisseur lui montre d'énormes quantités de texte et pousse les nombres vers une meilleure prédiction du token suivant. C'est fait une fois, c'est cher, et ce n'est pas une action disponible dans l'éditeur.
+Training est le processus qui définit les [paramètres](/notions/parameters) d’un [modèle](/notions/model) en l’exposant à d’immenses quantités de texte et en ajustant ces paramètres pour améliorer la [prédiction du jeton (token) suivant](/notions/next-token-prediction). Il s’agit d’une opération coûteuse, effectuée une seule fois par le fournisseur du modèle. Ce processus englobe à la fois le pré-entraînement (la phase principale) et le post-entraînement (les affinages ultérieurs tels que le respect des instructions et les mesures de sécurité) ; cette distinction importe peu au niveau de ce glossaire.
 
-On y range à la fois le premier grand passage sur le corpus et les réglages plus tardifs (suivre une consigne, refuser certains contenus). Pour lire une facture ou un échec de session, la frontière entre les deux compte peu : les deux ont lieu avant que tu utilises le modèle.
+Le mécanisme repose sur la répétition à grande échelle : on présente au modèle un segment de texte, on lui demande de prédire le jeton suivant, on ajuste ses paramètres pour les rapprocher du jeton réel, et l’on répète l’opération sur des milliers de milliards de jetons. Rien n’est stocké sous forme de faits ou de règles ; tout ce que le modèle « sait » résulte de l’amélioration de sa capacité de prédiction, ces informations étant compressées dans les paramètres sous forme de [connaissances paramétriques](/notions/parametric-knowledge).
 
-Rien n'est stocké comme une fiche. Ce que le modèle récite est un effet secondaire d'être devenu bon à prédire, compressé dans les paramètres.
-
-Deux conséquences suivent. L'entraînement s'arrête à une date : le modèle n'a pas vu la version de librairie sortie le mois dernier. Et tu ne peux pas « lui apprendre » ton API interne par ce biais. Le seul levier pendant l'[inférence](/notions/inference) est de mettre ce matériau dans le contexte.
+Deux conséquences ont une incidence au quotidien. L’entraînement s’arrête à un moment précis, ce qui confère au modèle une date limite de connaissances (ou « [coupure de connaissances](/notions/knowledge-cutoff) ») : il ignore, par exemple, la version de la bibliothèque que vous avez installée le mois dernier. Par ailleurs, l’entraînement n’est pas une opération que vous pouvez effectuer vous-même : si le modèle ne connaît pas votre base de code, vos conventions ou vos API internes, la solution ne consiste jamais à « apprendre » ces éléments au modèle, mais plutôt à les intégrer au [contexte](/notions/context), qui est le seul élément d’entrée que vous maîtrisez.
 
 ## À éviter
 
-- Demander un entraînement pour un fait qu'une page de doc réglerait.
-- Confondre entraînement et conversation : la conversation ne réécrit pas les nombres.
+- Traiter le pré-entraînement et le post-entraînement comme deux opérations à distinguer à ce niveau du glossaire.
+- Chercher à « apprendre » au modèle votre base de code, vos conventions ou vos API internes.
 
 ## En situation
 
-> « On peut faire en sorte qu'il connaisse notre API interne ? »
+> « Peut-on faire en sorte qu’il connaisse notre API interne ? »
 
-> « Pas par l'entraînement : c'est un chantier du fournisseur. Mets la doc de l'API dans le contexte. C'est ça que tu peux changer aujourd'hui. »
+> « Pas par l’entraînement ; c’est un processus qui prend des mois et qui est géré par le fournisseur du modèle. Intégrez plutôt la documentation de l’API au contexte : c’est le levier dont vous disposez réellement. »

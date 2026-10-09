@@ -2,7 +2,7 @@
 term: Parameters
 slug: parameters
 section: model
-description: "Nombres internes du modèle, réglés pendant l'entraînement puis figés. Une session ne les modifie pas."
+description: "Nombres contenus dans un modèle, souvent par milliards, ajustés durant l’entraînement. On les appelle aussi des poids."
 sourceTerm: Parameters
 related:
   - model
@@ -10,21 +10,19 @@ related:
   - inference
 ---
 
-Les paramètres sont les nombres à l'intérieur d'un [modèle](/notions/model). On en compte souvent des milliards. On les appelle aussi des poids. Tout ce que le modèle « sait » sans qu'on le lui redonne tient dans ces nombres.
+Parameters désigne les nombres contenus dans un [modèle](/notions/model) — souvent par milliards — qui sont ajustés durant l’[entraînement](/notions/training). Tout ce que le modèle « sait » y est inscrit. L’entraînement les définit ; l’[inférence](/notions/inference) les utilise tels quels. On les appelle aussi « poids ».
 
-Le calcul du token suivant multiplie, en quelque sorte, le texte d'entrée par ces nombres. Il n'y a pas de base de faits à côté, ni de table des API. Une réponse juste sur une bibliothèque standard est un effet de ces nombres, pas une lecture.
+Concrètement, ce sont les paramètres qui transforment les données d’entrée en données de sortie. La [prédiction du jeton (token) suivant](/notions/next-token-prediction) est un calcul colossal : les jetons de la [fenêtre de contexte](/notions/context-window) sont traités, multipliés par les paramètres, et le résultat est une prédiction pour le jeton suivant. Le modèle ne contient ni base de données de faits ni table de correspondance codée : il n’y a que ces nombres, agencés de telle sorte que le calcul tende à produire un résultat utile. Les faits que le modèle peut restituer grâce à son entraînement — comme l’API d’une bibliothèque standard — relèvent de la « [connaissance paramétrique](/notions/parametric-knowledge) » : ils sont stockés dans les paramètres eux-mêmes et ne sont pas récupérés depuis une source externe.
 
-Le point utile au quotidien : après l'[entraînement](/notions/training), les paramètres ne bougent plus. Corriger le modèle dans le chat, lui montrer le dépôt, lui signaler une erreur ne réécrit rien. La session d'après repart des mêmes nombres. C'est pour cela qu'une précision sur votre API interne doit arriver dans le contexte, pas dans l'espoir qu'il « apprenne ».
-
-Changer les paramètres, c'est réentraîner, donc obtenir en pratique un autre modèle. Pour un seul produit, mettre le code et les docs dans le contexte coûte presque toujours moins cher.
+Il est important de bien comprendre que les paramètres sont figés après l’entraînement. Aucune action effectuée lors d’une session ne les modifie : ni les corrections apportées, ni le code source présenté, ni les erreurs dont le modèle pourrait tirer parti. Chaque session s’appuie sur les mêmes nombres. C’est pourquoi le modèle est [sans état (stateless)](/notions/stateless), pourquoi ses connaissances intrinsèques s’arrêtent à la [date butoir de ses données d’entraînement](/notions/knowledge-cutoff), et pourquoi toute information spécifique à un projet doit être fournie via le [contexte](/notions/context). La seule façon de modifier les paramètres est de procéder à un nouvel entraînement, ce qui donne, en réalité, un modèle différent.
 
 ## À éviter
 
-- Croire qu'une correction de session met à jour les paramètres.
-- Dire « le modèle a retenu » pour une info qui n'était que dans la conversation.
+- Croire qu’une correction, le code présenté ou une erreur corrigée en session modifie les paramètres.
+- Réentraîner pour un seul projet alors qu’il est presque toujours plus économique de charger la base de code dans le contexte.
 
 ## En situation
 
-> « On le fine-tune sur notre dépôt ? »
+> « Peut-on l’affiner (fine-tuning) sur notre base de code ? »
 
-> « Ça réécrirait les paramètres : autre modèle à la fin. Pour un projet, charge le code en contexte. C'est le levier que tu contrôles. »
+> « Cela modifierait les paramètres, ce qui donnerait un modèle différent. Pour un projet donné, il est presque toujours plus économique de charger la base de code dans le contexte plutôt que de réentraîner le modèle. »

@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="flex min-h-full flex-col">
         <NuqsAdapter>
           <SiteHeader entries={entries} />
-          <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
+          <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 lg:px-6 lg:py-10">
             {children}
           </main>
           <SiteFooter />

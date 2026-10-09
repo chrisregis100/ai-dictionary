@@ -14,8 +14,10 @@ export default function RecherchePage() {
   const entries = getSearchEntries();
 
   return (
-    <Suspense fallback={<p className="text-muted">Recherche…</p>}>
-      <SearchScreen entries={entries} />
-    </Suspense>
+    <div className="max-w-3xl">
+      <Suspense fallback={<p className="text-muted">Recherche…</p>}>
+        <SearchScreen entries={entries} />
+      </Suspense>
+    </div>
   );
 }

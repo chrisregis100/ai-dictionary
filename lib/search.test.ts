@@ -13,6 +13,11 @@ const entries = [
     term: "Prefix cache",
     description: "Réemploi du début identique.",
   },
+  {
+    slug: "context-window",
+    term: "Context window",
+    description: "La fenêtre de contexte.",
+  },
 ];
 
 describe("filterEntries", () => {
@@ -27,5 +32,14 @@ describe("filterEntries", () => {
     expect(filterEntries(entries, "unité").map((entry) => entry.slug)).toEqual([
       "token",
     ]);
+  });
+
+  it("ignore les accents des deux côtés", () => {
+    expect(
+      filterEntries(entries, "fenetre").map((entry) => entry.slug),
+    ).toEqual(["context-window"]);
+    expect(
+      filterEntries(entries, "FENÊTRE").map((entry) => entry.slug),
+    ).toEqual(["context-window"]);
   });
 });
