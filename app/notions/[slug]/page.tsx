@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { EntryBody } from "@/components/entry-body";
+import { LemmaHeading } from "@/components/LemmaHeading";
 import { RelatedTerms } from "@/components/related-terms";
 import { UnderstoodButton } from "@/components/understood-button";
 import { sectionById } from "@/content/curriculum";
@@ -41,20 +42,23 @@ export default async function NotionPage({ params }: NotionPageProps) {
 
   return (
     <article className="space-y-8">
-      <header className="space-y-4">
+      <header className="space-y-5">
         <p className="text-sm text-muted">
-          <Link href="/" className="hover:text-clay-deep">
+          <Link href="/" className="link-ink text-sage">
             Parcours
           </Link>
           <span aria-hidden> · </span>
           {section.title}
         </p>
-        <h1 className="font-serif text-4xl text-ink sm:text-5xl">{entry.term}</h1>
-        <p className="max-w-prose text-lg leading-8 text-ink/80">
+        <LemmaHeading term={entry.term} />
+        <p className="max-w-prose text-lg leading-8 text-ink/85">
           {entry.description}
         </p>
         <UnderstoodButton slug={entry.slug} />
       </header>
+      <p className="ornament text-xs" aria-hidden>
+        ※
+      </p>
       <EntryBody markdown={entry.body} />
       <RelatedTerms terms={related} />
     </article>

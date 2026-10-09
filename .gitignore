@@ -48,3 +48,6 @@ next-env.d.ts
 
 # clone temporaire du glossaire source (à supprimer librement)
 /.upstream-tmp/
+
+# rapports locaux d'audit éditorial
+/reports/

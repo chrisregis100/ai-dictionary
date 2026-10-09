@@ -8,12 +8,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <article className="max-w-prose space-y-4 text-base leading-7">
-      <h1 className="font-serif text-4xl">À propos</h1>
+    <article className="max-w-prose space-y-5 text-base leading-7">
+      <p className="font-serif text-sm italic text-sage">¶ Notice</p>
+      <h1 className="font-serif text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.08] tracking-[-0.03em] italic">
+        À propos
+      </h1>
       <p>
         Ce dictionnaire reprend l&apos;ordre et les termes de{" "}
         <a
-          className="font-medium text-clay-deep underline"
+          className="link-ink font-medium text-sage"
           href="https://github.com/mattpocock/dictionary-of-ai-coding"
         >
           dictionary-of-ai-coding
@@ -28,15 +31,18 @@ export default function AboutPage() {
       </p>
       <p>
         Une fiche nouvelle est un fichier Markdown. Le site se reconstruit.
-        <code className="mx-1 rounded bg-card px-1.5 py-0.5 text-sm ring-1 ring-line">
+        <code className="mx-1 rounded-md bg-card px-1.5 py-0.5 text-sm ring-1 ring-line">
           pnpm content:upstream
         </code>
         signale les termes ajoutés ou retirés dans le glossaire source, sans
         en télécharger le corps. Les règles d&apos;écriture sont dans{" "}
-        <code className="rounded bg-card px-1.5 py-0.5 text-sm ring-1 ring-line">
+        <code className="rounded-md bg-card px-1.5 py-0.5 text-sm ring-1 ring-line">
           CONTENT.md
         </code>
         .
+      </p>
+      <p className="ornament pt-6 text-xs" aria-hidden>
+        ※
       </p>
     </article>
   );

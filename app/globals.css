@@ -1,28 +1,61 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --paper: #f4efe6;
-  --ink: #1c1712;
+  --paper-sand: #ede6d6;
+  --paper-kraft: #e4d5c0;
   --card: #fffdf8;
-  --line: #e6dccb;
+  --ink: #1c1712;
+  --muted: #5c554c;
+  --line: #d9cebb;
   --clay: #c4512c;
   --clay-deep: #8a3114;
-  --moss: #1d6b43;
-  --moss-soft: #e7f3ec;
-  --muted: #6f675e;
+  --on-clay: #fffdf8;
+  --sage: #5c6b4a;
+  --sage-bright: #6b7f5e;
+  --sage-soft: #e4eadc;
+  --on-sage: #fffdf8;
   --background: var(--paper);
   --foreground: var(--ink);
+  --grain-opacity: 0.03;
+}
+
+.dark {
+  --paper: #14181f;
+  --paper-sand: #191e27;
+  --paper-kraft: #1f252f;
+  --card: #1c232d;
+  --ink: #f0eadf;
+  --muted: #c4b9a8;
+  --line: #2c3440;
+  --clay: #e07a52;
+  --clay-deep: #f0a07e;
+  --on-clay: #fffdf8;
+  --sage: #a8b896;
+  --sage-bright: #c0cfb0;
+  --sage-soft: #243028;
+  --on-sage: #14181f;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --grain-opacity: 0.035;
 }
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-paper-sand: var(--paper-sand);
+  --color-paper-kraft: var(--paper-kraft);
   --color-ink: var(--ink);
   --color-card: var(--card);
   --color-line: var(--line);
   --color-clay: var(--clay);
   --color-clay-deep: var(--clay-deep);
-  --color-moss: var(--moss);
-  --color-moss-soft: var(--moss-soft);
+  --color-on-clay: var(--on-clay);
+  --color-sage: var(--sage);
+  --color-sage-bright: var(--sage-bright);
+  --color-sage-soft: var(--sage-soft);
+  --color-on-sage: var(--on-sage);
   --color-muted: var(--muted);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -30,8 +63,111 @@
   --font-serif: var(--font-fraunces), serif;
 }
 
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-outfit), sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: color-mix(in srgb, var(--clay) 28%, var(--paper));
+  color: var(--ink);
+}
+
+a {
+  border-radius: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 3px;
+}
+
+.link-ink {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-ink:hover,
+.link-ink:focus-visible {
+  background-size: 100% 1px;
+}
+
+.paper-card {
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  box-shadow: 1px 1px 0 color-mix(in srgb, var(--ink) 6%, transparent);
+  transition:
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 220ms ease;
+}
+
+.paper-card:hover,
+.paper-card:focus-within {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--ink) 42%, transparent);
+  box-shadow:
+    4px 8px 0 -1px color-mix(in srgb, var(--ink) 10%, transparent),
+    0 14px 22px -12px color-mix(in srgb, var(--ink) 28%, transparent);
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--sage);
+  font-family: var(--font-fraunces), serif;
+  font-style: italic;
+  letter-spacing: 0.12em;
+}
+
+.ornament::before,
+.ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .link-ink,
+  .paper-card {
+    transition: none;
+  }
+
+  .paper-card:hover,
+  .paper-card:focus-within {
+    transform: none;
+  }
 }

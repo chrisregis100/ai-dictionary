@@ -5,13 +5,13 @@ import type { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-clay text-white hover:bg-clay-deep",
-        quiet: "bg-card text-ink ring-1 ring-line hover:bg-paper",
-        moss: "bg-moss text-white hover:bg-moss/90",
+        default: "bg-clay text-on-clay hover:bg-clay-deep",
+        quiet: "bg-card text-ink ring-1 ring-line hover:bg-paper-sand",
+        sage: "bg-sage text-on-sage hover:bg-sage-bright",
       },
       size: {
         default: "h-11 px-4 text-sm",

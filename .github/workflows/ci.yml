@@ -24,3 +24,6 @@ jobs:
       - name: Veille du glossaire source
         run: pnpm content:upstream
         continue-on-error: true
+      - name: Audit éditorial des définitions
+        run: pnpm content:audit
+        continue-on-error: true

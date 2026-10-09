@@ -3,13 +3,13 @@ import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  tone?: "clay" | "moss" | "muted";
+  tone?: "clay" | "sage" | "muted";
 }
 
 const tones = {
   clay: "bg-clay/10 text-clay-deep",
-  moss: "bg-moss-soft text-moss",
-  muted: "bg-line text-muted",
+  sage: "bg-sage-soft text-sage",
+  muted: "bg-paper-sand text-muted",
 } as const;
 
 export function Badge({

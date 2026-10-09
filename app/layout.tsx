@@ -3,8 +3,10 @@ import { Fraunces, Outfit } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
+import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/site-header";
 import { getSearchEntries } from "@/lib/dictionary";
+import { themeInitScript } from "@/lib/theme";
 
 import "./globals.css";
 
@@ -16,6 +18,8 @@ const outfit = Outfit({
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
+  style: ["normal", "italic"],
+  axes: ["SOFT", "WONK", "opsz"],
 });
 
 export const metadata: Metadata = {
@@ -33,12 +37,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="fr"
-      className={`${outfit.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${outfit.variable} ${fraunces.variable} min-h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="flex min-h-full flex-col">
         <NuqsAdapter>
           <SiteHeader entries={entries} />
-          <main className="mx-auto w-full max-w-3xl px-4 py-8">{children}</main>
+          <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
+            {children}
+          </main>
+          <SiteFooter />
         </NuqsAdapter>
       </body>
     </html>

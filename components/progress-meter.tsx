@@ -11,7 +11,7 @@ export function ProgressMeter({ total }: ProgressMeterProps) {
   const percent = total === 0 ? 0 : Math.round((count / total) * 100);
 
   return (
-    <div className="rounded-2xl bg-card p-4 ring-1 ring-line">
+    <div className="paper-card rounded-2xl bg-paper-sand p-4">
       <p className="text-sm text-muted">
         <span className="font-semibold text-ink">{count}</span>
         {count === 1 ? " notion comprise" : " notions comprises"} sur {total}
@@ -25,7 +25,7 @@ export function ProgressMeter({ total }: ProgressMeterProps) {
         aria-valuenow={count}
       >
         <div
-          className="h-full rounded-full bg-moss"
+          className="h-full rounded-full bg-sage"
           style={{ width: `${percent}%` }}
         />
       </div>

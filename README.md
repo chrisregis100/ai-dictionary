@@ -21,6 +21,16 @@ pnpm content:upstream
 
 Ce script compare les noms de fichiers du glossaire source aux champs `sourceTerm`. Il signale les ajouts, retraits et renommages possibles. Il ne télécharge pas le corps des fiches. En CI, un écart est un avertissement : il ne bloque pas le déploiement.
 
+```bash
+pnpm content:audit
+```
+
+Audit éditorial **déterministe** : pas d’appel réseau, pas d’IA. Il lit les fiches dans `content/entries`, applique des règles heuristiques (`lib/audit/`) et **ne modifie aucun fichier**. Les rapports vont dans `reports/` (`content-audit.json`, `content-audit.md`), dossier ignoré par Git.
+
+Les résultats orientent une **revue humaine** ; ils ne remplacent pas le jugement éditorial. Interprétation des findings, file de revue et limites de l’outil : voir [CONTENT.md](./CONTENT.md#audit-éditorial).
+
+L’audit n’est pas encore un **contrôle bloquant** en intégration continue : lancez-le en local avant une passe éditoriale.
+
 ## Vérifier
 
 ```bash

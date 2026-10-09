@@ -1,5 +1,6 @@
 "use client";
 
+import { Search } from "@deemlol/next-icons";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
@@ -37,10 +38,11 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex h-10 items-center gap-3 rounded-full bg-card px-3 text-sm text-muted ring-1 ring-line hover:text-ink"
+        className="inline-flex h-10 items-center gap-2 rounded-full bg-card px-3 text-sm text-muted ring-1 ring-line transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
       >
+        <Search size={16} strokeWidth={1.75} aria-hidden />
         Rechercher
-        <kbd className="hidden rounded-md bg-paper px-1.5 py-0.5 font-sans text-xs sm:inline">
+        <kbd className="hidden rounded-md bg-paper-sand px-1.5 py-0.5 font-sans text-xs sm:inline">
           ⌘K
         </kbd>
       </button>
@@ -55,7 +57,7 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
             <Command label="Notions" className="flex flex-col">
               <Command.Input
                 placeholder="Token, cache, harnais…"
-                className="h-12 w-full bg-transparent px-3 text-base outline-none placeholder:text-muted"
+                className="h-12 w-full bg-transparent px-3 text-base outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
               />
               <Command.List className="max-h-80 overflow-y-auto">
                 <Command.Empty className="px-3 py-6 text-sm text-muted">
@@ -66,9 +68,9 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
                     key={entry.slug}
                     value={`${entry.term} ${entry.description} ${entry.sectionTitle}`}
                     onSelect={() => handleSelect(entry.slug)}
-                    className="cursor-pointer rounded-2xl px-3 py-3 data-[selected=true]:bg-paper"
+                    className="cursor-pointer rounded-2xl px-3 py-3 data-[selected=true]:bg-paper-sand"
                   >
-                    <span className="block font-semibold">{entry.term}</span>
+                    <span className="block font-serif text-lg italic">{entry.term}</span>
                     <span className="mt-1 block text-sm text-muted">
                       {entry.description}
                     </span>
