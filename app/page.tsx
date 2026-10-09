@@ -1,9 +1,19 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 import { DictionaryBrowser } from "@/components/dictionary-browser";
 import { DictionaryHero } from "@/components/dictionary-hero";
+import { JsonLd } from "@/components/seo/json-ld";
 import { curriculum } from "@/content/curriculum";
 import { getEntries } from "@/lib/dictionary";
+import {
+  buildDefinedTermSetSchema,
+  buildWebSiteSchema,
+} from "@/lib/seo/structured-data";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   const entries = getEntries();
@@ -26,19 +36,23 @@ export default function HomePage() {
   }));
 
   return (
-    <div className="space-y-10">
-      <DictionaryHero
-        entryCount={entries.length}
-        sections={curriculum.map((section) => ({
-          id: section.id,
-          title: section.title,
-        }))}
-      />
-      <Suspense
-        fallback={<p className="text-sm text-muted">Chargement du dictionnaire…</p>}
-      >
-        <DictionaryBrowser sections={sections} />
-      </Suspense>
-    </div>
+    <>
+      <JsonLd data={buildWebSiteSchema()} />
+      <JsonLd data={buildDefinedTermSetSchema(entries)} />
+      <div className="space-y-10">
+        <DictionaryHero
+          entryCount={entries.length}
+          sections={curriculum.map((section) => ({
+            id: section.id,
+            title: section.title,
+          }))}
+        />
+        <Suspense
+          fallback={<p className="text-sm text-muted">Chargement du dictionnaire…</p>}
+        >
+          <DictionaryBrowser sections={sections} />
+        </Suspense>
+      </div>
+    </>
   );
 }

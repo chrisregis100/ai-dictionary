@@ -4,10 +4,13 @@ import { Suspense } from "react";
 import { SearchScreen } from "@/components/search-screen";
 import { getSearchEntries } from "@/lib/dictionary";
 
+const rechercheDescription =
+  "Chercher une notion par son terme anglais, son slug ou un mot de la description.";
+
 export const metadata: Metadata = {
   title: "Recherche",
-  description:
-    "Chercher une notion par son terme anglais, son slug ou un mot de la description.",
+  description: rechercheDescription,
+  alternates: { canonical: "/recherche" },
 };
 
 export default function RecherchePage() {

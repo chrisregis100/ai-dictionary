@@ -7,6 +7,7 @@ import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/site-header";
 import { getSearchEntries } from "@/lib/dictionary";
+import { siteConfig } from "@/lib/site";
 import { themeInitScript } from "@/lib/theme";
 
 import "./globals.css";
@@ -24,12 +25,51 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Dictionnaire d'IA coding",
-    template: "%s · Dictionnaire d'IA coding",
+    default: siteConfig.name,
+    template: `%s · ${siteConfig.name}`,
   },
-  description:
-    "Le vocabulaire du codage avec l'IA, expliqué en français. Les termes anglais restent les termes.",
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  publisher: siteConfig.author,
+  keywords: [
+    "dictionnaire IA",
+    "vocabulaire IA",
+    "AI coding",
+    "glossaire",
+    "intelligence artificielle",
+    "token",
+    "agent IA",
+    "LLM",
+    "prompt",
+    "codage assisté par IA",
+    "MCP",
+  ],
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    siteName: siteConfig.name,
+    url: siteConfig.url,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  alternates: { canonical: "/" },
+  formatDetection: { telephone: false },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

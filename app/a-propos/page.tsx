@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 
 import { OutboundLink } from "@/components/analytics/outbound-link";
 
+const aboutDescription =
+  "La mission du Dictionnaire d'IA coding, comment les fiches sont écrites, et qui l'a fait.";
+
 export const metadata: Metadata = {
   title: "À propos",
-  description:
-    "La mission du Dictionnaire d'IA coding, comment les fiches sont écrites, et qui l'a fait.",
+  description: aboutDescription,
+  alternates: { canonical: "/a-propos" },
 };
 
 export default function AboutPage() {
