@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "D'où viennent les notions, et pourquoi le texte français n'est pas une traduction du glossaire source.",
+    "La mission du Dictionnaire d'IA coding, comment les fiches sont écrites, et qui l'a fait.",
 };
 
 export default function AboutPage() {
