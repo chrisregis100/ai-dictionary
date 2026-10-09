@@ -6,7 +6,10 @@ import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import type { SearchEntry } from "@/lib/dictionary";
+import { filterEntries } from "@/lib/search";
+import { useTrackSearch } from "@/lib/use-track-search";
 
 interface SearchPaletteProps {
   entries: SearchEntry[];
@@ -15,6 +18,9 @@ interface SearchPaletteProps {
 export function SearchPalette({ entries }: SearchPaletteProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [paletteQuery, setPaletteQuery] = useState("");
+  const paletteResults = filterEntries(entries, paletteQuery);
+  useTrackSearch(open ? paletteQuery : "", paletteResults.length);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -29,8 +35,21 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
   }, []);
 
   const handleSelect = (slug: string) => {
+    const entry = entries.find((item) => item.slug === slug);
+    if (entry) {
+      trackEvent(ANALYTICS_EVENTS.termClick, {
+        term: entry.term,
+        slug: entry.slug,
+      });
+    }
     setOpen(false);
+    setPaletteQuery("");
     router.push(`/notions/${slug}`);
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (!nextOpen) setPaletteQuery("");
   };
 
   return (
@@ -46,7 +65,7 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
           ⌘K
         </kbd>
       </button>
-      <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Root open={open} onOpenChange={handleOpenChange}>
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/40" />
           <Dialog.Content
@@ -56,6 +75,8 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
             <Dialog.Title className="sr-only">Rechercher une notion</Dialog.Title>
             <Command label="Notions" className="flex flex-col">
               <Command.Input
+                value={paletteQuery}
+                onValueChange={setPaletteQuery}
                 placeholder="Token, cache, harnais…"
                 className="h-12 w-full bg-transparent px-3 text-base outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
               />

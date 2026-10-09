@@ -4,6 +4,8 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
+import { OutboundLink } from "@/components/analytics/outbound-link";
+
 interface EntryBodyProps {
   markdown: string;
 }
@@ -44,11 +46,7 @@ export function EntryBody({ markdown }: EntryBodyProps) {
             if (href.startsWith("/")) {
               return <Link href={href}>{children}</Link>;
             }
-            return (
-              <a href={href} rel="noreferrer" target="_blank">
-                {children}
-              </a>
-            );
+            return <OutboundLink href={href}>{children}</OutboundLink>;
           },
         }}
       >

@@ -3,6 +3,7 @@ import { Fraunces, Outfit } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
+import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/site-header";
 import { getSearchEntries } from "@/lib/dictionary";
@@ -43,7 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-dvh flex-col">
         <NuqsAdapter>
           <SiteHeader entries={entries} />
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 lg:px-6 lg:py-10">
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </main>
           <SiteFooter />
         </NuqsAdapter>
+        <UmamiAnalytics />
       </body>
     </html>
   );

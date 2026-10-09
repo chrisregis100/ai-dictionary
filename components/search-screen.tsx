@@ -1,13 +1,14 @@
 "use client";
 
 import { Search } from "@deemlol/next-icons";
-import Link from "next/link";
 import { parseAsString, useQueryState } from "nuqs";
 
+import { TermLink } from "@/components/analytics/term-link";
 import { Input } from "@/components/ui/input";
 import type { SearchEntry } from "@/lib/dictionary";
 import { grammarLabel } from "@/lib/lemma";
 import { filterEntries } from "@/lib/search";
+import { useTrackSearch } from "@/lib/use-track-search";
 
 interface SearchScreenProps {
   entries: SearchEntry[];
@@ -19,6 +20,7 @@ export function SearchScreen({ entries }: SearchScreenProps) {
     parseAsString.withDefault("").withOptions({ history: "replace" }),
   );
   const results = filterEntries(entries, query);
+  useTrackSearch(query, results.length);
 
   const handleChange = (value: string) => {
     void setQuery(value === "" ? null : value);
@@ -67,12 +69,13 @@ export function SearchScreen({ entries }: SearchScreenProps) {
               {entry.sectionTitle}
               <span className="ml-2 font-serif italic">{grammarLabel(entry.term)}</span>
             </span>
-            <Link
-              href={`/notions/${entry.slug}`}
+            <TermLink
+              term={entry.term}
+              slug={entry.slug}
               className="mt-1 block font-serif text-2xl italic after:absolute after:inset-0"
             >
               {entry.term}
-            </Link>
+            </TermLink>
             <p className="pointer-events-none mt-1 text-sm leading-6 text-muted">
               {entry.description}
             </p>

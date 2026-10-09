@@ -1,5 +1,6 @@
 import { GitHub } from "@deemlol/next-icons";
 
+import { OutboundLink } from "@/components/analytics/outbound-link";
 import type { SectionId } from "@/content/curriculum";
 
 const SOURCE_GLOSSARY_URL = "https://github.com/chrisregis100/ai-dictionary";
@@ -32,14 +33,9 @@ export function DictionaryHero({ entryCount, sections }: DictionaryHeroProps) {
             aria-hidden
             className="text-sage"
           />
-          <a
-            href={SOURCE_GLOSSARY_URL}
-            className="link-ink text-sage"
-            rel="noreferrer"
-            target="_blank"
-          >
+          <OutboundLink href={SOURCE_GLOSSARY_URL} className="link-ink text-sage">
             chrisregis100/ai-dictionary
-          </a>
+          </OutboundLink>
         </p>
       </div>
       <div className="hero-index-panel flex items-center rounded-2xl px-6 py-8 lg:px-10">

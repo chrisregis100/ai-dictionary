@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { TermLink } from "@/components/analytics/term-link";
 import { grammarLabel } from "@/lib/lemma";
 
 interface RelatedTerm {
@@ -21,15 +20,16 @@ export function RelatedTerms({ terms }: RelatedTermsProps) {
       <ul className="space-y-2">
         {terms.map((term) => (
           <li key={term.slug} className="paper-card relative rounded-2xl bg-card px-4 py-3">
-            <Link
-              href={`/notions/${term.slug}`}
+            <TermLink
+              term={term.term}
+              slug={term.slug}
               className="font-serif text-lg italic after:absolute after:inset-0"
             >
               {term.term}
               <span aria-hidden className="ml-2 font-serif text-sm not-italic text-sage">
                 {grammarLabel(term.term)}
               </span>
-            </Link>
+            </TermLink>
             <p className="pointer-events-none mt-1 text-sm leading-6 text-muted">
               {term.description}
             </p>

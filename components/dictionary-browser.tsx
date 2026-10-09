@@ -1,12 +1,13 @@
 "use client";
 
 import { ArrowUpRight, Search, X } from "@deemlol/next-icons";
-import Link from "next/link";
 import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useMemo, useState } from "react";
 
+import { TermLink } from "@/components/analytics/term-link";
 import { Input } from "@/components/ui/input";
 import { filterEntries } from "@/lib/search";
+import { useTrackSearch } from "@/lib/use-track-search";
 import { cn } from "@/lib/utils";
 
 export interface DictionaryCardEntry {
@@ -57,6 +58,7 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
     0,
   );
   const trimmedQuery = query.trim();
+  useTrackSearch(trimmedQuery, resultCount);
 
   useEffect(() => {
     const headings = filtered
@@ -200,8 +202,9 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
                       key={entry.slug}
                       className="border-b border-line md:odd:border-r"
                     >
-                      <Link
-                        href={`/notions/${entry.slug}`}
+                      <TermLink
+                        term={entry.term}
+                        slug={entry.slug}
                         aria-label={entry.term}
                         aria-describedby={`desc-${entry.slug}`}
                         className="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-paper-sand motion-reduce:transition-none"
@@ -223,7 +226,7 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
                         >
                           {entry.description}
                         </span>
-                      </Link>
+                      </TermLink>
                     </li>
                   ))}
                 </ul>

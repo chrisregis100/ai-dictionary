@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { TermLink } from "@/components/analytics/term-link";
 import { cn } from "@/lib/utils";
 
 interface TermNavItem {
@@ -69,8 +70,9 @@ export function TermSidebar({
                   const isActive = term.slug === currentSlug;
                   return (
                     <li key={term.slug}>
-                      <Link
-                        href={`/notions/${term.slug}`}
+                      <TermLink
+                        term={term.term}
+                        slug={term.slug}
                         aria-current={isActive ? "page" : undefined}
                         className={cn(
                           "block rounded-md px-2.5 py-1.5 text-sm transition-colors",
@@ -80,7 +82,7 @@ export function TermSidebar({
                         )}
                       >
                         {term.term}
-                      </Link>
+                      </TermLink>
                     </li>
                   );
                 })}
@@ -99,8 +101,9 @@ export function TermSidebar({
             const isActive = term.slug === currentSlug;
             return (
               <li key={term.slug}>
-                <Link
-                  href={`/notions/${term.slug}`}
+                <TermLink
+                  term={term.term}
+                  slug={term.slug}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "block rounded-full px-3 py-1 text-sm ring-1 ring-line",
@@ -110,7 +113,7 @@ export function TermSidebar({
                   )}
                 >
                   {term.term}
-                </Link>
+                </TermLink>
               </li>
             );
           })}
