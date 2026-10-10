@@ -1,6 +1,6 @@
 import { StackProvider, StackTheme } from "@stackframe/stack";
 import type { Metadata } from "next";
-import { Fraunces, Outfit } from "next/font/google";
+import localFont from "next/font/local";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
@@ -14,16 +14,30 @@ import { stackServerApp } from "@/stack";
 
 import "./globals.css";
 
-const outfit = Outfit({
-  subsets: ["latin"],
+const outfit = localFont({
+  src: "../assets/fonts/Outfit-Variable.woff2",
+  weight: "100 900",
   variable: "--font-outfit",
+  display: "swap",
+  adjustFontFallback: "Arial",
 });
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
+const fraunces = localFont({
+  src: [
+    {
+      path: "../assets/fonts/Fraunces-Variable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+    {
+      path: "../assets/fonts/Fraunces-Variable-Italic.woff2",
+      weight: "100 900",
+      style: "italic",
+    },
+  ],
   variable: "--font-fraunces",
-  style: ["normal", "italic"],
-  axes: ["SOFT", "WONK", "opsz"],
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
 export const metadata: Metadata = {
