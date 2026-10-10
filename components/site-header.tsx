@@ -1,9 +1,10 @@
-import { BookOpen } from "@deemlol/next-icons";
+import { Zap } from "@deemlol/next-icons";
 import Link from "next/link";
 
 import { SearchPalette } from "@/components/search-palette";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import type { SearchEntry } from "@/lib/dictionary";
+import { siteConfig } from "@/lib/site";
 
 interface SiteHeaderProps {
   entries: SearchEntry[];
@@ -17,18 +18,18 @@ export function SiteHeader({ entries }: SiteHeaderProps) {
           href="/"
           className="link-ink inline-flex items-center gap-2 font-serif text-lg italic text-ink"
         >
-          <BookOpen size={18} strokeWidth={1.6} className="text-clay" aria-hidden />
-          Dictionnaire
+          <Zap size={18} strokeWidth={1.6} className="text-clay" aria-hidden />
+          {siteConfig.name}
         </Link>
         <nav aria-label="Pages" className="flex items-center gap-4 text-sm">
-          <Link href="/" className="link-ink text-sage">
+          <Link href="/dictionnaire" className="link-ink text-sage">
             Dictionnaire
           </Link>
-          <Link href="/recherche" className="link-ink text-sage">
-            Recherche
+          <Link href="/blog" className="link-ink text-sage">
+            Blog
           </Link>
-          <Link href="/a-propos" className="link-ink text-sage">
-            À propos
+          <Link href="/newsletter" className="link-ink text-sage">
+            Newsletter
           </Link>
         </nav>
         <div className="ml-auto flex items-center gap-2">

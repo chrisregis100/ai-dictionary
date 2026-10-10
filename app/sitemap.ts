@@ -25,12 +25,18 @@ function sitemapEntry(
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     sitemapEntry("/", { changeFrequency: "weekly", priority: 1 }),
-    sitemapEntry("/recherche", { changeFrequency: "monthly", priority: 0.5 }),
+    sitemapEntry("/dictionnaire", { changeFrequency: "weekly", priority: 0.9 }),
+    sitemapEntry("/dictionnaire/recherche", {
+      changeFrequency: "monthly",
+      priority: 0.5,
+    }),
+    sitemapEntry("/blog", { changeFrequency: "weekly", priority: 0.8 }),
+    sitemapEntry("/newsletter", { changeFrequency: "yearly", priority: 0.5 }),
     sitemapEntry("/a-propos", { changeFrequency: "yearly", priority: 0.3 }),
   ];
 
   const entryRoutes = getEntries().map((entry) =>
-    sitemapEntry(`/notions/${entry.slug}`, {
+    sitemapEntry(`/dictionnaire/${entry.slug}`, {
       changeFrequency: "monthly",
       priority: 0.8,
       lastModified: getEntryLastModified(entry.slug),

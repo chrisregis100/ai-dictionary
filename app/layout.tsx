@@ -1,3 +1,4 @@
+import { StackProvider, StackTheme } from "@stackframe/stack";
 import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -9,6 +10,7 @@ import { SiteHeader } from "@/components/site-header";
 import { getSearchEntries } from "@/lib/dictionary";
 import { siteConfig } from "@/lib/site";
 import { themeInitScript } from "@/lib/theme";
+import { stackServerApp } from "@/stack";
 
 import "./globals.css";
 
@@ -36,17 +38,16 @@ export const metadata: Metadata = {
   creator: siteConfig.author,
   publisher: siteConfig.author,
   keywords: [
+    "développement assisté par IA",
+    "AI coding",
     "dictionnaire IA",
     "vocabulaire IA",
-    "AI coding",
-    "glossaire",
     "intelligence artificielle",
-    "token",
     "agent IA",
     "LLM",
     "prompt",
-    "codage assisté par IA",
     "MCP",
+    "blog IA",
   ],
   openGraph: {
     type: "website",
@@ -85,13 +86,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col">
-        <NuqsAdapter>
-          <SiteHeader entries={entries} />
-          <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 lg:px-6 lg:py-10">
-            {children}
-          </main>
-          <SiteFooter />
-        </NuqsAdapter>
+        <StackProvider app={stackServerApp}>
+          <StackTheme>
+            <NuqsAdapter>
+              <SiteHeader entries={entries} />
+              <main className="w-full flex-1">{children}</main>
+              <SiteFooter />
+            </NuqsAdapter>
+          </StackTheme>
+        </StackProvider>
         <UmamiAnalytics />
       </body>
     </html>

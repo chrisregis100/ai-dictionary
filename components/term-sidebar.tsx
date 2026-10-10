@@ -41,8 +41,8 @@ export function TermSidebar({
             return (
               <li key={section.id} className="shrink-0 lg:shrink">
                 <Link
-                  href={`/#${section.id}`}
-                  aria-label={`Aller à la section ${section.title} sur l'accueil`}
+                  href={`/dictionnaire#${section.id}`}
+                  aria-label={`Aller à la section ${section.title} sur l'accueil du dictionnaire`}
                   className="block rounded-lg px-2.5 py-2 font-mono text-sm whitespace-nowrap text-muted transition-colors hover:bg-paper-sand hover:text-ink"
                 >
                   <span aria-hidden className="text-clay">

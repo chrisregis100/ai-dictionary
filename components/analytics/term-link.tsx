@@ -16,5 +16,5 @@ export function TermLink({ term, slug, onClick, ...props }: TermLinkProps) {
     onClick?.(event);
   };
 
-  return <Link href={`/notions/${slug}`} onClick={handleClick} {...props} />;
+  return <Link href={`/dictionnaire/${slug}`} onClick={handleClick} {...props} />;
 }

@@ -34,10 +34,10 @@ export function resolveSiteUrl(
 }
 
 export const siteConfig = {
-  name: "Dictionnaire d'IA coding",
-  shortName: "IA coding",
+  name: "Dev Hero",
+  shortName: "Dev Hero",
   description:
-    "Le vocabulaire du codage avec l'IA, expliqué en français. Les termes anglais restent les termes.",
+    "La plateforme francophone pour maîtriser le développement assisté par IA : dictionnaire, blog et ressources pratiques, en français clair.",
   url: resolveSiteUrl(),
   locale: "fr_FR",
   author: "Regis Kiki",

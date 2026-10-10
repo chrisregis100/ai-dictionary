@@ -11,7 +11,11 @@ export const metadata: Metadata = {
 
 export function NotFound() {
   return (
-    <div className={cn("space-y-10")}>
+    <div
+      className={cn(
+        "mx-auto w-full max-w-6xl space-y-10 px-4 py-8 lg:px-6 lg:py-10",
+      )}
+    >
       <header className="flex max-w-xl flex-col gap-5">
         <p className="text-[0.7rem] font-medium tracking-[0.22em] text-muted uppercase">
           Erreur 404
@@ -20,7 +24,7 @@ export function NotFound() {
           Page introuvable
         </h1>
         <p className="max-w-prose text-base leading-7 text-muted">
-          Cette adresse ne correspond à aucune fiche ni page du dictionnaire.
+          Cette adresse ne correspond à aucune page de la plateforme.
         </p>
         <div className={cn("flex flex-wrap items-center gap-3")}>
           <Button asChild>
@@ -29,7 +33,10 @@ export function NotFound() {
             </Link>
           </Button>
           <Button asChild variant="quiet">
-            <Link href="/recherche" aria-label="Chercher une notion">
+            <Link
+              href="/dictionnaire/recherche"
+              aria-label="Chercher une notion"
+            >
               Chercher une notion
             </Link>
           </Button>

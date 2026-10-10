@@ -32,7 +32,7 @@ export async function generateMetadata({
   }
 
   const sectionTitle = sectionById(entry.section).title;
-  const canonicalPath = `/notions/${slug}`;
+  const canonicalPath = `/dictionnaire/${slug}`;
   const url = absoluteUrl(canonicalPath);
   const keywords = [...new Set([entry.term, entry.sourceTerm, sectionTitle])];
 
@@ -87,8 +87,9 @@ export default async function NotionPage({ params }: NotionPageProps) {
       <JsonLd
         data={buildBreadcrumbSchema([
           { name: "Accueil", path: "/" },
-          { name: sectionTitle, path: `/#${entry.section}` },
-          { name: entry.term, path: `/notions/${entry.slug}` },
+          { name: "Dictionnaire", path: "/dictionnaire" },
+          { name: sectionTitle, path: `/dictionnaire#${entry.section}` },
+          { name: entry.term, path: `/dictionnaire/${entry.slug}` },
         ])}
       />
       <div className="lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start lg:gap-10">

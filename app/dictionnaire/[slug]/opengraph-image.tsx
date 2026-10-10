@@ -3,9 +3,9 @@ import { OgEntryCard, OgFallbackCard } from "@/lib/og/cards";
 import { renderOgImage } from "@/lib/og/render";
 import { OG_CONTENT_TYPE, OG_SIZE } from "@/lib/og/theme";
 import { getEntries, getEntry } from "@/lib/dictionary";
-import { siteConfig } from "@/lib/site";
+import { dictionaryModule } from "@/lib/modules/dictionary";
 
-export const alt = siteConfig.name;
+export const alt = dictionaryModule.name;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 
@@ -25,7 +25,7 @@ export default async function Image({
     return renderOgImage(
       <OgFallbackCard
         heading="Notion introuvable"
-        detail={siteConfig.description}
+        detail={dictionaryModule.description}
       />,
     );
   }

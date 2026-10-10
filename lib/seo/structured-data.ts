@@ -1,7 +1,10 @@
+import { dictionaryModule } from "@/lib/modules/dictionary";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
 export const SEARCH_QUERY_PARAM = "q";
-export const DEFINED_TERM_SET_ID = absoluteUrl("/#glossary");
+export const DEFINED_TERM_SET_ID = absoluteUrl(
+  `${dictionaryModule.basePath}#glossary`,
+);
 export const WEBSITE_ID = absoluteUrl("/#website");
 
 export interface StructuredTermInput {
@@ -82,7 +85,7 @@ export interface BreadcrumbItem {
 }
 
 export function termAbsoluteUrl(slug: string): string {
-  return absoluteUrl(`/notions/${slug}`);
+  return absoluteUrl(`${dictionaryModule.basePath}/${slug}`);
 }
 
 function buildTermRef(entry: StructuredTermInput): SchemaDefinedTerm {
@@ -93,6 +96,25 @@ function buildTermRef(entry: StructuredTermInput): SchemaDefinedTerm {
     name: entry.term,
     description: entry.description,
     url,
+  };
+}
+
+export interface SchemaOrganizationStandalone extends SchemaOrganization {
+  "@context": "https://schema.org";
+  "@id": string;
+  description: string;
+  sameAs: string[];
+}
+
+export function buildOrganizationSchema(): SchemaOrganizationStandalone {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": absoluteUrl("/#organization"),
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.description,
+    sameAs: [siteConfig.githubUrl],
   };
 }
 
@@ -114,7 +136,7 @@ export function buildWebSiteSchema(): SchemaWebSite {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${absoluteUrl("/recherche")}?${SEARCH_QUERY_PARAM}={search_term_string}`,
+        urlTemplate: `${absoluteUrl(`${dictionaryModule.basePath}/recherche`)}?${SEARCH_QUERY_PARAM}={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
@@ -128,9 +150,9 @@ export function buildDefinedTermSetSchema(
     "@context": "https://schema.org",
     "@type": "DefinedTermSet",
     "@id": DEFINED_TERM_SET_ID,
-    name: siteConfig.name,
-    description: siteConfig.description,
-    url: siteConfig.url,
+    name: dictionaryModule.name,
+    description: dictionaryModule.description,
+    url: absoluteUrl(dictionaryModule.basePath),
     inLanguage: "fr-FR",
     hasDefinedTerm: entries.map(buildTermRef),
   };

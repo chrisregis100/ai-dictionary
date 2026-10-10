@@ -10,7 +10,7 @@ const rechercheDescription =
 export const metadata: Metadata = {
   title: "Recherche",
   description: rechercheDescription,
-  alternates: { canonical: "/recherche" },
+  alternates: { canonical: "/dictionnaire/recherche" },
 };
 
 export default function RecherchePage() {

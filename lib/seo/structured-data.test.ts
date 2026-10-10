@@ -16,7 +16,7 @@ describe("buildWebSiteSchema", () => {
     const schema = buildWebSiteSchema();
     expect(SEARCH_QUERY_PARAM).toBe("q");
     expect(schema.potentialAction.target.urlTemplate).toBe(
-      `${absoluteUrl("/recherche")}?q={search_term_string}`,
+      `${absoluteUrl("/dictionnaire/recherche")}?q={search_term_string}`,
     );
     expect(schema.url).toBe(siteConfig.url);
     expect(schema["@id"].startsWith("http")).toBe(true);
@@ -69,12 +69,14 @@ describe("buildBreadcrumbSchema", () => {
   it("utilise le titre français de section, pas l'id", () => {
     const schema = buildBreadcrumbSchema([
       { name: "Accueil", path: "/" },
-      { name: "Le modèle", path: "/#model" },
-      { name: "Token", path: "/notions/token" },
+      { name: "Le modèle", path: "/dictionnaire#model" },
+      { name: "Token", path: "/dictionnaire/token" },
     ]);
 
     expect(schema.itemListElement[1]?.name).toBe("Le modèle");
     expect(schema.itemListElement[1]?.name).not.toBe("model");
-    expect(schema.itemListElement[2]?.item).toBe(absoluteUrl("/notions/token"));
+    expect(schema.itemListElement[2]?.item).toBe(
+      absoluteUrl("/dictionnaire/token"),
+    );
   });
 });

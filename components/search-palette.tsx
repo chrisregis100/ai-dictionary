@@ -44,7 +44,7 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
     }
     setOpen(false);
     setPaletteQuery("");
-    router.push(`/notions/${slug}`);
+    router.push(`/dictionnaire/${slug}`);
   };
 
   const handleOpenChange = (nextOpen: boolean) => {
