@@ -5,24 +5,57 @@ import { useActionState, useId } from "react";
 
 import { subscribeToNewsletter } from "@/actions/newsletter-actions";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import type { NewsletterSource } from "@/lib/newsletter-audience";
 import { initialNewsletterFormState } from "@/lib/newsletter-form-state";
 import { cn } from "@/lib/utils";
 
+const consentCopy: Record<NewsletterSource, string> = {
+  newsletter:
+    "J’accepte de recevoir la newsletter. Désinscription en un clic à tout moment.",
+  build:
+    "J’accepte d’être prévenu du lancement de Dev Hero Build. Désinscription en un clic à tout moment.",
+  formations:
+    "J’accepte d’être prévenu des formations. Désinscription en un clic à tout moment.",
+};
+
 interface NewsletterFormProps {
   className?: string;
+  source?: NewsletterSource;
 }
 
-export function NewsletterForm({ className }: NewsletterFormProps) {
+export function NewsletterForm({
+  className,
+  source = "newsletter",
+}: NewsletterFormProps) {
   const [state, formAction, isPending] = useActionState(
     subscribeToNewsletter,
     initialNewsletterFormState,
   );
   const emailId = useId();
+  const consentId = useId();
   const feedbackId = useId();
+  const honeypotId = useId();
 
   return (
-    <form action={formAction} className={cn("space-y-2", className)}>
+    <form action={formAction} className={cn("relative space-y-3", className)}>
+      <div className="absolute h-px w-px overflow-hidden" aria-hidden="true">
+        <label htmlFor={honeypotId}>Ne pas remplir</label>
+        <input
+          id={honeypotId}
+          name="website"
+          type="text"
+          autoComplete="off"
+          autoCapitalize="off"
+          tabIndex={-1}
+          defaultValue=""
+        />
+      </div>
+
+      {/* Source (champ caché transmis à la Server Action) */}
+      <input type="hidden" name="source" value={source} />
+
       <div className="flex flex-wrap items-center gap-2">
         <label className="sr-only" htmlFor={emailId}>
           Adresse e-mail
@@ -42,6 +75,24 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
           <ArrowRight size={16} strokeWidth={2} aria-hidden />
         </Button>
       </div>
+
+      {/* Consentement explicite requis */}
+      <div className="flex items-start gap-2">
+        <Checkbox
+          id={consentId}
+          name="consent"
+          value="true"
+          required
+          aria-describedby={feedbackId}
+        />
+        <label
+          htmlFor={consentId}
+          className="cursor-pointer text-xs leading-relaxed text-muted-foreground"
+        >
+          {consentCopy[source]}
+        </label>
+      </div>
+
       <p
         id={feedbackId}
         role="status"

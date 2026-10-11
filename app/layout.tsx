@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="flex min-h-dvh flex-col bg-background text-foreground">
+      <body className="flex min-h-dvh flex-col bg-background text-foreground" suppressHydrationWarning>
         <StackProvider app={stackServerApp}>
           <StackTheme>
             <NuqsAdapter>

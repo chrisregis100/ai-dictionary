@@ -18,9 +18,7 @@ function withProtocol(value: string): string {
   return `https://${value}`;
 }
 
-export function resolveSiteUrl(
-  env: NodeJS.ProcessEnv = process.env,
-): string {
+export function resolveSiteUrl(env: NodeJS.ProcessEnv = process.env): string {
   const configured = env.NEXT_PUBLIC_SITE_URL?.trim();
   if (configured) return stripTrailingSlash(withProtocol(configured));
 
@@ -37,7 +35,7 @@ export const siteConfig = {
   name: "Dev Hero",
   shortName: "Dev Hero",
   description:
-    "La plateforme francophone pour maîtriser le développement assisté par IA : dictionnaire, blog et ressources pratiques, en français clair.",
+    "La plateforme pour maîtriser le développement assisté par IA : dictionnaire, blog et ressources pratiques.",
   url: resolveSiteUrl(),
   locale: "fr_FR",
   author: "Regis Kiki",
