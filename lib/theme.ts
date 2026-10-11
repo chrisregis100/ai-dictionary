@@ -5,14 +5,12 @@ export type ThemePreference = "light" | "dark";
 export const themeInitScript = `(function(){
   try {
     var stored = localStorage.getItem("${THEME_STORAGE_KEY}");
-    var theme = stored === "dark" || stored === "light"
-      ? stored
-      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var theme = stored === "dark" || stored === "light" ? stored : "dark";
     document.documentElement.classList.toggle("dark", theme === "dark");
     document.documentElement.style.colorScheme = theme;
   } catch {
-    document.documentElement.classList.remove("dark");
-    document.documentElement.style.colorScheme = "light";
+    document.documentElement.classList.add("dark");
+    document.documentElement.style.colorScheme = "dark";
   }
 })();`;
 
@@ -25,9 +23,7 @@ export function readStoredTheme(): ThemePreference | null {
 export function resolveTheme(): ThemePreference {
   const stored = readStoredTheme();
   if (stored) return stored;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return "dark";
 }
 
 export function applyTheme(theme: ThemePreference) {

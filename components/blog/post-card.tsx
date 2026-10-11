@@ -9,16 +9,16 @@ interface PostCardProps {
 
 export function PostCard({ post }: PostCardProps) {
   return (
-    <li className="paper-card relative rounded-2xl bg-card px-5 py-5">
+    <li className="relative rounded-xl border border-border bg-card px-5 py-5 transition-colors hover:bg-surface">
       {post.publishedAt ? (
         <time
           dateTime={post.publishedAt.toISOString()}
-          className="text-xs font-medium tracking-wide text-sage"
+          className="text-xs font-medium tracking-wide text-muted-foreground"
         >
           {formatPostDate(post.publishedAt)}
         </time>
       ) : null}
-      <h2 className="mt-1 font-serif text-2xl italic text-ink">
+      <h2 className="mt-1 text-lg font-semibold tracking-tight text-foreground">
         <Link
           href={`/blog/${post.slug}`}
           className="after:absolute after:inset-0"
@@ -26,7 +26,7 @@ export function PostCard({ post }: PostCardProps) {
           {post.title}
         </Link>
       </h2>
-      <p className="pointer-events-none mt-2 text-sm leading-6 text-muted">
+      <p className="pointer-events-none mt-2 text-sm leading-6 text-muted-foreground">
         {post.excerpt}
       </p>
     </li>

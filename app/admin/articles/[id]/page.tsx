@@ -42,11 +42,11 @@ async function EditArticle({ params }: EditArticlePageProps) {
 export default function EditArticlePage({ params }: EditArticlePageProps) {
   return (
     <div className="space-y-8">
-      <h1 className="font-serif text-3xl italic tracking-[-0.02em] text-ink">
+      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
         Éditer un article
       </h1>
       <Suspense
-        fallback={<p className="text-sm text-muted">Chargement de l&apos;article…</p>}
+        fallback={<p className="text-sm text-muted-foreground">Chargement de l&apos;article…</p>}
       >
         <EditArticle params={params} />
       </Suspense>

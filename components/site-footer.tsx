@@ -1,6 +1,8 @@
+import { GitHub } from "@deemlol/next-icons";
 import Link from "next/link";
 
 import { OutboundLink } from "@/components/analytics/outbound-link";
+import { Logo } from "@/components/brand/logo";
 import { NewsletterForm } from "@/components/newsletter/newsletter-form";
 import { blogModule } from "@/lib/modules/blog";
 import { dictionaryModule } from "@/lib/modules/dictionary";
@@ -26,18 +28,16 @@ const footerColumns = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-auto border-t border-line bg-paper-kraft">
-      <div className="mx-auto w-full max-w-6xl px-4 py-10 lg:px-6">
-        <div className="grid gap-8 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1fr)]">
+    <footer className="mt-auto border-t border-border bg-surface/60">
+      <div className="mx-auto w-full max-w-6xl px-4 py-12 lg:px-6">
+        <div className="grid gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div className="space-y-4">
-            <p className="font-serif text-lg italic text-ink">
-              {siteConfig.name}
-            </p>
-            <p className="max-w-sm text-sm leading-6 text-muted">
+            <Logo />
+            <p className="max-w-sm text-sm leading-6 text-muted-foreground text-pretty">
               {siteConfig.description}
             </p>
             <div className="space-y-2">
-              <p className="text-[0.7rem] font-medium tracking-[0.22em] text-muted uppercase">
+              <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
                 Newsletter
               </p>
               <NewsletterForm />
@@ -49,13 +49,16 @@ export function SiteFooter() {
               aria-label={column.title}
               className="space-y-3"
             >
-              <p className="text-[0.7rem] font-medium tracking-[0.22em] text-muted uppercase">
+              <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
                 {column.title}
               </p>
               <ul className="space-y-2 text-sm">
                 {column.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="link-ink text-sage">
+                    <Link
+                      href={link.href}
+                      className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -64,14 +67,15 @@ export function SiteFooter() {
             </nav>
           ))}
         </div>
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6">
-          <p className="font-serif text-sm italic text-muted">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6">
+          <p className="text-sm text-muted-foreground">
             Fait par {siteConfig.author}
           </p>
           <OutboundLink
             href={siteConfig.githubUrl}
-            className="link-ink text-sm text-sage"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
+            <GitHub size={16} strokeWidth={1.75} aria-hidden />
             GitHub
           </OutboundLink>
         </div>

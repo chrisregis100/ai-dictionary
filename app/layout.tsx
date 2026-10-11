@@ -1,11 +1,11 @@
 import { StackProvider, StackTheme } from "@stackframe/stack";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
 import { UmamiAnalytics } from "@/components/analytics/umami-analytics";
-import { SiteFooter } from "@/components/SiteFooter";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getSearchEntries } from "@/lib/dictionary";
 import { siteConfig } from "@/lib/site";
@@ -20,24 +20,6 @@ const outfit = localFont({
   variable: "--font-outfit",
   display: "swap",
   adjustFontFallback: "Arial",
-});
-
-const fraunces = localFont({
-  src: [
-    {
-      path: "../assets/fonts/Fraunces-Variable.woff2",
-      weight: "100 900",
-      style: "normal",
-    },
-    {
-      path: "../assets/fonts/Fraunces-Variable-Italic.woff2",
-      weight: "100 900",
-      style: "italic",
-    },
-  ],
-  variable: "--font-fraunces",
-  display: "swap",
-  adjustFontFallback: "Times New Roman",
 });
 
 export const metadata: Metadata = {
@@ -87,19 +69,27 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f4ef" },
+    { media: "(prefers-color-scheme: dark)", color: "#050505" },
+  ],
+  colorScheme: "light dark",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   const entries = getSearchEntries();
 
   return (
     <html
       lang="fr"
-      className={`${outfit.variable} ${fraunces.variable} min-h-full antialiased`}
+      className={`${outfit.variable} min-h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="flex min-h-dvh flex-col">
+      <body className="flex min-h-dvh flex-col bg-background text-foreground">
         <StackProvider app={stackServerApp}>
           <StackTheme>
             <NuqsAdapter>

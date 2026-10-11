@@ -47,7 +47,7 @@ export default function DictionaryHomePage() {
           }))}
         />
         <Suspense
-          fallback={<p className="text-sm text-muted">Chargement du dictionnaire…</p>}
+          fallback={<p className="text-sm text-muted-foreground">Chargement du dictionnaire…</p>}
         >
           <DictionaryBrowser sections={sections} />
         </Suspense>

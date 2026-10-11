@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 import { OutboundLink } from "@/components/analytics/outbound-link";
 import { siteConfig } from "@/lib/site";
@@ -15,73 +14,55 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 lg:px-6 lg:py-10">
+    <div className="mx-auto w-full max-w-6xl px-4 py-10 lg:px-6 lg:py-14">
       <article className="h-full max-w-prose space-y-12 text-base leading-7">
-        <h1 className="font-serif text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.08] tracking-[-0.03em] italic">
+        <h1 className="text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.08] font-semibold tracking-[-0.04em]">
           À propos
         </h1>
 
         <section className="space-y-4">
-          <h2 className="font-serif text-2xl italic tracking-[-0.02em] text-ink">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">
             La mission
           </h2>
-          <p>
-            {siteConfig.name} aide les développeurs francophones à maîtriser le
-            développement assisté par IA. Les outils, les docs et les
-            conversations se passent en anglais ; la plateforme explique en
-            français clair ce qu&apos;ils font, sans traduire les termes qui
-            comptent.
-          </p>
-          <p>
-            Tout part du contenu gratuit : un{" "}
-            <Link href="/dictionnaire" className="link-ink font-medium text-sage">
-              dictionnaire
-            </Link>{" "}
-            des notions du code assisté par IA, un{" "}
-            <Link href="/blog" className="link-ink font-medium text-sage">
-              blog
-            </Link>{" "}
-            d&apos;articles pratiques, et une{" "}
-            <Link href="/newsletter" className="link-ink font-medium text-sage">
-              newsletter
-            </Link>{" "}
-            pour suivre ce qui bouge.
+          <p className="text-pretty">
+            {siteConfig.name} aide les développeurs à maîtriser le développement
+            assisté par IA. Les outils, les docs et les conversations se passent
+            en anglais ; la plateforme explique en français clair ce qu&apos;ils
+            font, sans traduire les termes qui comptent.
           </p>
         </section>
 
         <section className="space-y-4">
-          <h2 className="font-serif text-2xl italic tracking-[-0.02em] text-ink">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">
             Le dictionnaire
           </h2>
-          <p>
+          <p className="text-pretty">
             Le dictionnaire reprend l&apos;ordre et les termes du glossaire{" "}
             <OutboundLink
-              className="link-ink font-medium text-sage"
+              className="font-medium text-accent underline-offset-4 hover:underline"
               href={siteConfig.upstreamUrl}
             >
               dictionary-of-ai-coding
             </OutboundLink>{" "}
             de Matt Pocock. Les explications françaises sont une réécriture
-            originale : le texte du dépôt source n&apos;est pas recopié. Chaque
-            fiche est un fichier Markdown validé au build, et le site se
-            reconstruit à partir de ces fichiers.
+            originale
           </p>
-          <p>
-            Les noms de notions restent en anglais — Token, Harness, MCP —
-            parce que ce sont les mots que tu croises dans les outils. Le
-            français sert à dire ce qu&apos;ils font.
+          <p className="text-pretty">
+            Les noms de notions restent en anglais — Token, Harness, MCP — parce
+            que ce sont les mots que tu croises dans les outils. Le français
+            sert à dire ce qu&apos;ils font.
           </p>
         </section>
 
         <section className="space-y-4">
-          <h2 className="font-serif text-2xl italic tracking-[-0.02em] text-ink">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">
             Qui l&apos;a fait
           </h2>
-          <p>
+          <p className="text-pretty">
             Cette plateforme est faite par {siteConfig.author}. Le code et les
             fiches sont sur{" "}
             <OutboundLink
-              className="link-ink font-medium text-sage"
+              className="font-medium text-accent underline-offset-4 hover:underline"
               href={siteConfig.githubUrl}
             >
               GitHub

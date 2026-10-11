@@ -18,7 +18,7 @@ export default function RecherchePage() {
 
   return (
     <div className="max-w-3xl">
-      <Suspense fallback={<p className="text-muted">Recherche…</p>}>
+      <Suspense fallback={<p className="text-muted-foreground">Recherche…</p>}>
         <SearchScreen entries={entries} />
       </Suspense>
     </div>

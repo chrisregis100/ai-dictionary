@@ -3,24 +3,23 @@ import type { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  tone?: "clay" | "sage" | "muted";
+  tone?: "accent" | "muted";
 }
 
 const tones = {
-  clay: "bg-clay/10 text-clay-deep",
-  sage: "bg-sage-soft text-sage",
-  muted: "bg-paper-sand text-muted",
+  accent: "border-accent/20 bg-accent/10 text-accent",
+  muted: "border-border bg-surface text-muted-foreground",
 } as const;
 
 export function Badge({
   className,
-  tone = "clay",
+  tone = "accent",
   ...props
 }: BadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide",
+        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium tracking-wide",
         tones[tone],
         className,
       )}

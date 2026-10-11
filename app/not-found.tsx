@@ -13,17 +13,17 @@ export function NotFound() {
   return (
     <div
       className={cn(
-        "mx-auto w-full max-w-6xl space-y-10 px-4 py-8 lg:px-6 lg:py-10",
+        "mx-auto w-full max-w-6xl space-y-10 px-4 py-10 lg:px-6 lg:py-14",
       )}
     >
       <header className="flex max-w-xl flex-col gap-5">
-        <p className="text-[0.7rem] font-medium tracking-[0.22em] text-muted uppercase">
+        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
           Erreur 404
         </p>
-        <h1 className="font-serif text-[clamp(2.15rem,5vw,3rem)] leading-[1.12] tracking-[-0.03em] text-ink">
+        <h1 className="text-[clamp(2rem,4.5vw,2.85rem)] leading-[1.12] font-semibold tracking-[-0.04em] text-foreground">
           Page introuvable
         </h1>
-        <p className="max-w-prose text-base leading-7 text-muted">
+        <p className="max-w-prose text-base leading-7 text-muted-foreground text-pretty">
           Cette adresse ne correspond à aucune page de la plateforme.
         </p>
         <div className={cn("flex flex-wrap items-center gap-3")}>
@@ -32,7 +32,7 @@ export function NotFound() {
               Retour à l&apos;accueil
             </Link>
           </Button>
-          <Button asChild variant="quiet">
+          <Button asChild variant="outline">
             <Link
               href="/dictionnaire/recherche"
               aria-label="Chercher une notion"

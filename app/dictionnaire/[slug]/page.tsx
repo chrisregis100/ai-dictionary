@@ -98,17 +98,17 @@ export default async function NotionPage({ params }: NotionPageProps) {
           currentSection={entry.section}
           currentSlug={entry.slug}
         />
-        <article className="min-w-0 space-y-8 lg:border-l lg:border-line lg:pl-10">
+        <article className="min-w-0 space-y-8 lg:border-l lg:border-border lg:pl-10">
           <header className="space-y-5">
-            <h1 className="font-serif text-[clamp(2.6rem,7vw,4.4rem)] leading-[1.08] tracking-[-0.03em] text-ink">
+            <h1 className="text-[clamp(2.4rem,6vw,3.8rem)] leading-[1.08] font-semibold tracking-[-0.04em] text-foreground">
               {entry.term}
             </h1>
-            <p className="max-w-3xl text-xl leading-8 text-muted md:text-2xl">
+            <p className="max-w-3xl text-xl leading-8 text-muted-foreground text-pretty md:text-2xl">
               {entry.description}
             </p>
             <CopyPageButton markdown={pageMarkdown} />
           </header>
-          <hr className="border-line" />
+          <hr className="border-border" />
           <EntryBody markdown={entry.body} />
           <RelatedTerms terms={related} />
         </article>

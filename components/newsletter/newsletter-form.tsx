@@ -35,7 +35,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
           autoComplete="email"
           placeholder="ton@email.dev"
           aria-describedby={feedbackId}
-          className="h-11 w-full max-w-xs"
+          className="h-10 w-full max-w-xs"
         />
         <Button type="submit" disabled={isPending}>
           {isPending ? "Inscription…" : "S'inscrire"}
@@ -48,7 +48,7 @@ export function NewsletterForm({ className }: NewsletterFormProps) {
         aria-live="polite"
         className={cn(
           "min-h-5 text-sm",
-          state.status === "error" ? "text-clay" : "text-sage",
+          state.status === "error" ? "text-destructive" : "text-muted-foreground",
         )}
       >
         {state.message}

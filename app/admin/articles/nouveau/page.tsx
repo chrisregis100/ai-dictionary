@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function NewArticlePage() {
   return (
     <div className="space-y-8">
-      <h1 className="font-serif text-3xl italic tracking-[-0.02em] text-ink">
+      <h1 className="text-3xl font-semibold tracking-tight text-foreground">
         Nouvel article
       </h1>
       <ArticleForm action={createArticle} submitLabel="Créer l'article" />

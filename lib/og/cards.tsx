@@ -14,15 +14,15 @@ function OgFrame({ children }: OgFrameProps) {
         width: "100%",
         height: "100%",
         display: "flex",
-        backgroundColor: ogColors.paper,
-        color: ogColors.ink,
+        backgroundColor: ogColors.background,
+        color: ogColors.foreground,
       }}
     >
       <div
         style={{
-          width: 14,
+          width: 10,
           height: "100%",
-          backgroundColor: ogColors.clay,
+          backgroundColor: ogColors.accent,
           display: "flex",
         }}
       />
@@ -50,7 +50,7 @@ function OgFooter({ trailing }: { trailing: string }) {
         justifyContent: "space-between",
         marginTop: 28,
         paddingTop: 22,
-        borderTop: `1px solid ${ogColors.line}`,
+        borderTop: `1px solid ${ogColors.border}`,
         fontFamily: "Outfit",
         fontSize: ogType.footer,
         fontWeight: 600,
@@ -58,7 +58,7 @@ function OgFooter({ trailing }: { trailing: string }) {
       }}
     >
       <span style={{ display: "flex" }}>{siteConfig.name}</span>
-      <span style={{ display: "flex", color: ogColors.clay }}>{trailing}</span>
+      <span style={{ display: "flex", color: ogColors.accent }}>{trailing}</span>
     </div>
   );
 }
@@ -76,7 +76,7 @@ export function OgSiteCard({ termCount }: OgSiteCardProps) {
           fontFamily: "Outfit",
           fontSize: ogType.kicker,
           fontWeight: 600,
-          letterSpacing: "0.22em",
+          letterSpacing: "0.18em",
           textTransform: "uppercase",
           color: ogColors.muted,
         }}
@@ -94,12 +94,12 @@ export function OgSiteCard({ termCount }: OgSiteCardProps) {
         <div
           style={{
             display: "flex",
-            fontFamily: "Fraunces",
+            fontFamily: "Outfit",
             fontSize: ogType.siteTitle,
-            fontWeight: 700,
+            fontWeight: 600,
             lineHeight: 1.08,
-            letterSpacing: "-0.03em",
-            color: ogColors.ink,
+            letterSpacing: "-0.04em",
+            color: ogColors.foreground,
           }}
         >
           {siteConfig.name}
@@ -149,7 +149,7 @@ export function OgEntryCard({
           fontWeight: 600,
           letterSpacing: "0.14em",
           textTransform: "uppercase",
-          color: ogColors.clay,
+          color: ogColors.accent,
         }}
       >
         {sectionTitle}
@@ -165,12 +165,12 @@ export function OgEntryCard({
         <div
           style={{
             display: "flex",
-            fontFamily: "Fraunces",
+            fontFamily: "Outfit",
             fontSize: termFontSize(term),
-            fontWeight: 700,
+            fontWeight: 600,
             lineHeight: 1.08,
-            letterSpacing: "-0.03em",
-            color: ogColors.ink,
+            letterSpacing: "-0.04em",
+            color: ogColors.foreground,
           }}
         >
           {term}
@@ -183,7 +183,7 @@ export function OgEntryCard({
               fontFamily: "Outfit",
               fontSize: ogType.sourceTerm,
               fontWeight: 400,
-              color: ogColors.sage,
+              color: ogColors.muted,
             }}
           >
             {sourceTerm}
@@ -228,12 +228,12 @@ export function OgFallbackCard({ heading, detail }: OgFallbackCardProps) {
         <div
           style={{
             display: "flex",
-            fontFamily: "Fraunces",
+            fontFamily: "Outfit",
             fontSize: 72,
-            fontWeight: 700,
+            fontWeight: 600,
             lineHeight: 1.08,
-            letterSpacing: "-0.03em",
-            color: ogColors.ink,
+            letterSpacing: "-0.04em",
+            color: ogColors.foreground,
           }}
         >
           {heading}

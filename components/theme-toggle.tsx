@@ -19,7 +19,7 @@ function getThemeSnapshot(): ThemePreference {
 }
 
 function getServerSnapshot(): ThemePreference {
-  return "light";
+  return "dark";
 }
 
 export function ThemeToggle() {
@@ -40,8 +40,8 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={handleClick}
-      className="inline-flex size-10 items-center justify-center rounded-full text-ink ring-1 ring-line transition-colors hover:bg-paper-sand hover:text-clay focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
-      aria-label={isDark ? "Passer au thème papier" : "Passer au thème encre de nuit"}
+      className="inline-flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      aria-label={isDark ? "Passer au thème clair" : "Passer au thème sombre"}
       aria-pressed={isDark}
     >
       {isDark ? (

@@ -57,20 +57,20 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex h-10 items-center gap-2 rounded-full bg-card px-3 text-sm text-muted ring-1 ring-line transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
+        className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-surface/70 px-2.5 text-sm text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
-        <Search size={16} strokeWidth={1.75} aria-hidden />
-        Rechercher
-        <kbd className="hidden rounded-md bg-paper-sand px-1.5 py-0.5 font-sans text-xs sm:inline">
+        <Search size={15} strokeWidth={1.75} aria-hidden />
+        <span className="hidden sm:inline">Rechercher</span>
+        <kbd className="ml-1 hidden items-center rounded border border-border bg-background px-1.5 py-0.5 font-mono text-[0.65rem] text-muted-foreground sm:inline-flex">
           ⌘K
         </kbd>
       </button>
       <Dialog.Root open={open} onOpenChange={handleOpenChange}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/40" />
+          <Dialog.Overlay className="fixed inset-0 z-50 bg-foreground/40 backdrop-blur-sm" />
           <Dialog.Content
             aria-describedby={undefined}
-            className="fixed top-[12vh] left-1/2 z-50 w-[min(36rem,calc(100vw-2rem))] -translate-x-1/2 rounded-3xl bg-card p-3 shadow-xl ring-1 ring-line"
+            className="fixed top-[12vh] left-1/2 z-50 w-[min(36rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-card shadow-2xl"
           >
             <Dialog.Title className="sr-only">Rechercher une notion</Dialog.Title>
             <Command label="Notions" className="flex flex-col">
@@ -78,10 +78,10 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
                 value={paletteQuery}
                 onValueChange={setPaletteQuery}
                 placeholder="Token, cache, harnais…"
-                className="h-12 w-full bg-transparent px-3 text-base outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
+                className="h-12 w-full border-b border-border bg-transparent px-4 text-base outline-none placeholder:text-muted-foreground focus-visible:outline-none"
               />
-              <Command.List className="max-h-80 overflow-y-auto">
-                <Command.Empty className="px-3 py-6 text-sm text-muted">
+              <Command.List className="max-h-80 overflow-y-auto p-1.5">
+                <Command.Empty className="px-3 py-6 text-sm text-muted-foreground">
                   Aucune notion.
                 </Command.Empty>
                 {entries.map((entry) => (
@@ -89,10 +89,12 @@ export function SearchPalette({ entries }: SearchPaletteProps) {
                     key={entry.slug}
                     value={`${entry.term} ${entry.description} ${entry.sectionTitle}`}
                     onSelect={() => handleSelect(entry.slug)}
-                    className="cursor-pointer rounded-2xl px-3 py-3 data-[selected=true]:bg-paper-sand"
+                    className="cursor-pointer rounded-lg px-3 py-2.5 data-[selected=true]:bg-surface"
                   >
-                    <span className="block font-serif text-lg italic">{entry.term}</span>
-                    <span className="mt-1 block text-sm text-muted">
+                    <span className="block text-sm font-medium text-foreground">
+                      {entry.term}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-muted-foreground">
                       {entry.description}
                     </span>
                   </Command.Item>

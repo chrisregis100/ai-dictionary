@@ -5,19 +5,15 @@ export const OG_SIZE = {
 
 export const OG_CONTENT_TYPE = "image/png";
 
-/** Light-theme tokens from `app/globals.css` `:root` — hex only, no invented colors. */
+/** Dark-first tokens from `app/globals.css` `.dark` — hex only. */
 export const ogColors = {
-  paper: "#f4efe6",
-  paperSand: "#ede6d6",
-  paperKraft: "#e4d5c0",
-  card: "#fffdf8",
-  ink: "#1c1712",
-  muted: "#5c554c",
-  line: "#d9cebb",
-  clay: "#c4512c",
-  clayDeep: "#8a3114",
-  onClay: "#fffdf8",
-  sage: "#5c6b4a",
+  background: "#050505",
+  foreground: "#fafafa",
+  muted: "#a1a1aa",
+  card: "#0d0d10",
+  border: "#26262c",
+  accent: "#ff6600",
+  accentForeground: "#050505",
 } as const;
 
 export const ogType = {

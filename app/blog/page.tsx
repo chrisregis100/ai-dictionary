@@ -18,7 +18,7 @@ async function PostList() {
 
   if (posts.length === 0) {
     return (
-      <p className="rounded-2xl bg-paper-sand px-4 py-6 text-sm text-muted">
+      <p className="rounded-xl border border-border bg-surface px-4 py-6 text-sm text-muted-foreground">
         Les premiers articles arrivent bientôt. Inscris-toi à la newsletter
         pour être prévenu.
       </p>
@@ -36,19 +36,25 @@ async function PostList() {
 
 export default function BlogPage() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 lg:px-6 lg:py-10">
+    <div className="mx-auto w-full max-w-6xl px-4 py-10 lg:px-6 lg:py-14">
       <div className="max-w-3xl space-y-8">
         <header className="space-y-4">
-          <p className="font-serif text-sm italic text-sage">¶ Blog</p>
-          <h1 className="font-serif text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.08] tracking-[-0.03em] italic text-ink">
+          <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
+            Blog
+          </p>
+          <h1 className="text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.08] font-semibold tracking-[-0.04em] text-foreground">
             Blog
           </h1>
-          <p className="max-w-prose text-base leading-7 text-muted">
+          <p className="max-w-prose text-base leading-7 text-muted-foreground text-pretty">
             {blogModule.description}
           </p>
         </header>
         <Suspense
-          fallback={<p className="text-sm text-muted">Chargement des articles…</p>}
+          fallback={
+            <p className="text-sm text-muted-foreground">
+              Chargement des articles…
+            </p>
+          }
         >
           <PostList />
         </Suspense>
