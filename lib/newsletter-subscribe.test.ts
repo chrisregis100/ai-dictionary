@@ -142,11 +142,17 @@ describe("submitNewsletterSubscription", () => {
     const createContact = vi.fn(async () => ({
       error: { name: "validation_error", message: "Contact already exists" },
     }));
-    const result = await submission({ createContact });
+    const updateContact = vi.fn(async () => ({ error: null }));
+    const result = await submission({ createContact, updateContact });
 
     expect(result).toEqual({
       status: "success",
       message: newsletterMessages.duplicate,
+    });
+    expect(updateContact).toHaveBeenCalledExactlyOnceWith({
+      apiKey: "re_test_key",
+      email: "ada@example.com",
+      audienceId: "aud-newsletter",
     });
   });
 

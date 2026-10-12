@@ -69,6 +69,9 @@ export interface NewsletterSubmission {
   createContact?: (
     input: NewsletterContactInput,
   ) => Promise<NewsletterContactResult>;
+  updateContact?: (
+    input: NewsletterContactInput,
+  ) => Promise<NewsletterContactResult>;
 }
 
 function readField(value: unknown): string | null {
@@ -81,6 +84,20 @@ async function createResendContact(
 ): Promise<NewsletterContactResult> {
   const resend = new Resend(input.apiKey);
   const { error } = await resend.contacts.create({
+    email: input.email,
+    audienceId: input.audienceId,
+    unsubscribed: false,
+  });
+
+  if (!error) return { error: null };
+  return { error: { name: error.name, message: error.message } };
+}
+
+async function updateResendContact(
+  input: NewsletterContactInput,
+): Promise<NewsletterContactResult> {
+  const resend = new Resend(input.apiKey);
+  const { error } = await resend.contacts.update({
     email: input.email,
     audienceId: input.audienceId,
     unsubscribed: false,
@@ -146,6 +163,16 @@ export async function submitNewsletterSubscription(
 
     if (error) {
       if (isDuplicateContactError(error)) {
+        const updateContact = input.updateContact ?? updateResendContact;
+        const { error: updateError } = await updateContact({
+          apiKey,
+          email: parsed.data.email,
+          audienceId,
+        });
+
+        if (updateError) {
+          return { status: "error", message: newsletterMessages.failed };
+        }
         return { status: "success", message: newsletterMessages.duplicate };
       }
       return { status: "error", message: newsletterMessages.failed };
