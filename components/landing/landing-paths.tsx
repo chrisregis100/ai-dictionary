@@ -21,7 +21,7 @@ const pillars = [
     title: "Build",
     role: "Produire avec méthode et outils.",
     deliverables: ["Dev Hero Build", "Workflows", "Dépôts"],
-    href: "/outils/dev-hero-build",
+    href: "#dev-hero-build",
     action: "Découvrir Dev Hero Build",
     badge: "Liste d'attente",
   },

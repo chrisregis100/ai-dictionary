@@ -12,12 +12,9 @@ import { initialNewsletterFormState } from "@/lib/newsletter-form-state";
 import { cn } from "@/lib/utils";
 
 const consentCopy: Record<NewsletterSource, string> = {
-  newsletter:
-    "J’accepte de recevoir la newsletter. Désinscription en un clic à tout moment.",
-  build:
-    "J’accepte d’être prévenu du lancement de Dev Hero Build. Désinscription en un clic à tout moment.",
-  formations:
-    "J’accepte d’être prévenu des formations. Désinscription en un clic à tout moment.",
+  newsletter: "J’accepte de recevoir la newsletter Dev Hero à cette adresse.",
+  build: "J’accepte d’être prévenu du lancement de Dev Hero Build à cette adresse.",
+  formations: "J’accepte d’être prévenu des formations Dev Hero à cette adresse.",
 };
 
 interface NewsletterFormProps {
@@ -83,6 +80,7 @@ export function NewsletterForm({
           name="consent"
           value="true"
           required
+          defaultChecked={false}
           aria-describedby={feedbackId}
         />
         <label
@@ -92,6 +90,11 @@ export function NewsletterForm({
           {consentCopy[source]}
         </label>
       </div>
+
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        Seule ton adresse e-mail est enregistrée. Tu peux te désinscrire à tout
+        moment via le lien en bas de chaque e-mail.
+      </p>
 
       <p
         id={feedbackId}

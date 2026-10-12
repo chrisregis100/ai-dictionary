@@ -5,11 +5,12 @@ import { redirect } from "next/navigation";
 
 import type { ArticleFormState, PostInput } from "@/lib/blog/schema";
 import { PostInputSchema } from "@/lib/blog/schema";
-import { prisma } from "@/lib/db";
-import { stackServerApp } from "@/stack";
+import { getPrisma, isDatabaseConfigured } from "@/lib/db";
+import { getStackServerApp, isStackConfigured } from "@/stack";
 
 async function requireUser(): Promise<boolean> {
-  const user = await stackServerApp.getUser();
+  if (!isStackConfigured() || !isDatabaseConfigured()) return false;
+  const user = await getStackServerApp().getUser();
   return user !== null;
 }
 
@@ -71,7 +72,7 @@ export async function createArticle(
   const result = parseArticleForm(formData);
   if (!result.success) return result.state;
 
-  const existing = await prisma.post.findUnique({
+  const existing = await getPrisma().post.findUnique({
     where: { slug: result.data.slug },
     select: { id: true },
   });
@@ -83,7 +84,7 @@ export async function createArticle(
     };
   }
 
-  await prisma.post.create({
+  await getPrisma().post.create({
     data: {
       ...result.data,
       publishedAt: result.data.status === "PUBLISHED" ? new Date() : null,
@@ -106,12 +107,12 @@ export async function updateArticle(
   const result = parseArticleForm(formData);
   if (!result.success) return result.state;
 
-  const current = await prisma.post.findUnique({ where: { id } });
+  const current = await getPrisma().post.findUnique({ where: { id } });
   if (!current) {
     return { status: "error", message: "Article introuvable." };
   }
 
-  const slugTaken = await prisma.post.findFirst({
+  const slugTaken = await getPrisma().post.findFirst({
     where: { slug: result.data.slug, NOT: { id } },
     select: { id: true },
   });
@@ -123,7 +124,7 @@ export async function updateArticle(
     };
   }
 
-  await prisma.post.update({
+  await getPrisma().post.update({
     where: { id },
     data: {
       ...result.data,
@@ -145,11 +146,11 @@ export async function togglePublishArticle(formData: FormData): Promise<void> {
   const id = formData.get("id");
   if (typeof id !== "string" || id === "") return;
 
-  const post = await prisma.post.findUnique({ where: { id } });
+  const post = await getPrisma().post.findUnique({ where: { id } });
   if (!post) return;
 
   const isPublishing = post.status !== "PUBLISHED";
-  await prisma.post.update({
+  await getPrisma().post.update({
     where: { id },
     data: {
       status: isPublishing ? "PUBLISHED" : "DRAFT",
@@ -166,9 +167,9 @@ export async function deleteArticle(formData: FormData): Promise<void> {
   const id = formData.get("id");
   if (typeof id !== "string" || id === "") return;
 
-  const post = await prisma.post.findUnique({ where: { id } });
+  const post = await getPrisma().post.findUnique({ where: { id } });
   if (!post) return;
 
-  await prisma.post.delete({ where: { id } });
+  await getPrisma().post.delete({ where: { id } });
   revalidateBlogPaths(post.slug);
 }

@@ -10,7 +10,7 @@ import { SiteHeader } from "@/components/site-header";
 import { getSearchEntries } from "@/lib/dictionary";
 import { siteConfig } from "@/lib/site";
 import { themeInitScript } from "@/lib/theme";
-import { stackServerApp } from "@/stack";
+import { getStackServerApp, isStackConfigured } from "@/stack";
 
 import "./globals.css";
 
@@ -77,8 +77,20 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+function SiteChrome({ children }: { children: ReactNode }) {
   const entries = getSearchEntries();
+
+  return (
+    <NuqsAdapter>
+      <SiteHeader entries={entries} />
+      <main className="w-full flex-1">{children}</main>
+      <SiteFooter />
+    </NuqsAdapter>
+  );
+}
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  const chrome = <SiteChrome>{children}</SiteChrome>;
 
   return (
     <html
@@ -90,15 +102,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="flex min-h-dvh flex-col bg-background text-foreground" suppressHydrationWarning>
-        <StackProvider app={stackServerApp}>
-          <StackTheme>
-            <NuqsAdapter>
-              <SiteHeader entries={entries} />
-              <main className="w-full flex-1">{children}</main>
-              <SiteFooter />
-            </NuqsAdapter>
-          </StackTheme>
-        </StackProvider>
+        {isStackConfigured() ? (
+          <StackProvider app={getStackServerApp()}>
+            <StackTheme>{chrome}</StackTheme>
+          </StackProvider>
+        ) : (
+          chrome
+        )}
         <UmamiAnalytics />
       </body>
     </html>

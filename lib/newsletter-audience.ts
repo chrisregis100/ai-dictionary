@@ -22,21 +22,28 @@ export const newsletterSourceSchema = z.enum(NEWSLETTER_SOURCES).catch("newslett
  *
  * Retourne null si aucune audience n'est configurée.
  */
+export interface NewsletterAudienceEnv {
+  RESEND_AUDIENCE_ID?: string;
+  RESEND_AUDIENCE_ID_BUILD?: string;
+  RESEND_AUDIENCE_ID_FORMATIONS?: string;
+}
+
 function readAudienceId(value: string | undefined): string | null {
   const trimmed = value?.trim();
   return trimmed ? trimmed : null;
 }
 
+function audienceEnvFromProcess(): NewsletterAudienceEnv {
+  return {
+    RESEND_AUDIENCE_ID: process.env.RESEND_AUDIENCE_ID,
+    RESEND_AUDIENCE_ID_BUILD: process.env.RESEND_AUDIENCE_ID_BUILD,
+    RESEND_AUDIENCE_ID_FORMATIONS: process.env.RESEND_AUDIENCE_ID_FORMATIONS,
+  };
+}
+
 export function resolveAudienceId(
   source: NewsletterSource,
-  env: Partial<
-    Pick<
-      NodeJS.ProcessEnv,
-      | "RESEND_AUDIENCE_ID"
-      | "RESEND_AUDIENCE_ID_BUILD"
-      | "RESEND_AUDIENCE_ID_FORMATIONS"
-    >
-  > = process.env,
+  env: NewsletterAudienceEnv = audienceEnvFromProcess(),
 ): string | null {
   const base = readAudienceId(env.RESEND_AUDIENCE_ID);
 

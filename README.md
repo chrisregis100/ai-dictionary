@@ -64,14 +64,22 @@ Copier `.env.example` vers `.env.local` et renseigner :
 | `NEXT_PUBLIC_STACK_PROJECT_ID` | Projet Stack Auth (admin) |
 | `NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY` | Clé publique Stack |
 | `STACK_SECRET_SERVER_KEY` | Clé secrète Stack (serveur uniquement) |
-| `RESEND_API_KEY` | API Resend (newsletter et listes d'attente) |
-| `RESEND_AUDIENCE_ID` | Audience newsletter par défaut |
-| `RESEND_AUDIENCE_ID_BUILD` | Audience liste d'attente Dev Hero Build (repli : `RESEND_AUDIENCE_ID`) — **cible (Lot 1, L1-23)** : non lue par le code actuel, absente de `.env.example` |
-| `RESEND_AUDIENCE_ID_FORMATIONS` | Audience liste d'attente formations (repli : `RESEND_AUDIENCE_ID`) — **cible (Lot 1, L1-23)** : non lue par le code actuel, absente de `.env.example` |
+| `RESEND_API_KEY` | Clé API Resend, serveur uniquement. Sans elle, le formulaire reste visible et répond que l'inscription est indisponible |
+| `RESEND_AUDIENCE_ID` | Audience newsletter (`source=newsletter`). Sans audience résolue, même repli indisponible |
+| `RESEND_AUDIENCE_ID_BUILD` | Audience liste d'attente Dev Hero Build. Absente ou vide : repli sur `RESEND_AUDIENCE_ID` |
+| `RESEND_AUDIENCE_ID_FORMATIONS` | Audience liste d'attente formations. Absente ou vide : repli sur `RESEND_AUDIENCE_ID` |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Site Umami |
 | `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Script Umami (ex. `https://cloud.umami.is/script.js`) |
 
 Le **dictionnaire** ne nécessite pas la base de données : les fiches sont lues depuis le dépôt au build.
+
+La **newsletter** ne stocke rien dans Postgres. Le serveur valide l'e-mail (Zod), exige une case de consentement non pré-cochée, ignore les soumissions dont le champ honeypot `website` est rempli, et limite les tentatives (5 par adresse e-mail, 20 par adresse IP, sur 10 minutes, en mémoire sur chaque instance). Seule l'adresse e-mail est envoyée à Resend (`contacts.create`, audience legacy). Le build, les tests et la navigation fonctionnent sans ces variables : l'inscription affiche alors « L'inscription est momentanément indisponible ».
+
+Le SDK Resend 6 marque `audienceId` comme déprécié au profit des segments, tout en acceptant encore l'appel. Les variables restent des identifiants d'audience. Si le compte Resend n'a plus que des segments, il faudra trancher un nouveau contrat avant de changer le code.
+
+Sans `DATABASE_URL`, la landing et `/blog` affichent l'état vide (aucun article) au lieu d'échouer. L'admin ne peut pas enregistrer d'articles.
+
+Sans `NEXT_PUBLIC_STACK_PROJECT_ID`, `NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY` et `STACK_SECRET_SERVER_KEY` ensemble, les pages publiques restent servies et `/admin` indique que l'authentification n'est pas configurée. Les variables `NEXT_PUBLIC_*` sont figées au `next build` : les renseigner dans Vercel avant le déploiement de production.
 
 ### Base de données (blog)
 
@@ -101,8 +109,8 @@ Ouvrir [http://localhost:3000](http://localhost:3000).
 | `pnpm start` | Serveur après `build` |
 | `pnpm lint` | ESLint |
 | `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm test` | Vitest : schéma et curriculum du dictionnaire, recherche, lemme, veille upstream, audit, données structurées |
-| `pnpm test:e2e` | Playwright (parcours dictionnaire) |
+| `pnpm test` | Vitest : schéma et curriculum du dictionnaire, recherche, lemme, veille upstream, audit, données structurées, newsletter |
+| `pnpm test:e2e` | Playwright (dictionnaire, ancre Dev Hero Build, newsletter sans clé Resend) |
 | `pnpm content:upstream` | Compare les noms de fichiers du glossaire source Matt Pocock aux `sourceTerm` |
 | `pnpm content:audit` | Audit éditorial déterministe des fiches → `reports/` |
 
@@ -162,7 +170,7 @@ Cible **Vercel** (`vercel.json`) : install pnpm, `pnpm build`.
 | **Stack** | Authentification admin |
 | **Umami** | Analytics respectueux de la vie privée |
 
-Sans `DATABASE_URL`, le dictionnaire et les pages statiques peuvent être prévisualisés ; le blog et l'admin nécessitent la base et les clés Stack.
+Sans `DATABASE_URL`, le dictionnaire, la landing et la newsletter peuvent être prévisualisés ; le blog affiche son état vide. Le blog réel et l'admin nécessitent la base. L'admin nécessite aussi les clés Stack. La newsletter nécessite `RESEND_API_KEY` et `RESEND_AUDIENCE_ID` (les audiences Build et Formations sont facultatives et retombent sur l'audience générale).
 
 ## Documentation
 

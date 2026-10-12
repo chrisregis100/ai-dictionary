@@ -1,90 +1,37 @@
 "use server";
 
-import { Resend } from "resend";
-import { z } from "zod";
+import { connection } from "next/server";
+import { headers } from "next/headers";
 
-import {
-  isDuplicateContactError,
-  isHoneypotFilled,
-  newsletterSourceSchema,
-  resolveAudienceId,
-} from "@/lib/newsletter-audience";
 import type { NewsletterFormState } from "@/lib/newsletter-form-state";
+import { submitNewsletterSubscription } from "@/lib/newsletter-subscribe";
 
-const SubscribeSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .min(1, "Entre ton adresse e-mail.")
-    .email("Cette adresse e-mail ne semble pas valide."),
-  consent: z
-    .string()
-    .nullable()
-    .refine((v) => v === "true", {
-      message: "Tu dois cocher la case pour continuer.",
-    }),
-  source: newsletterSourceSchema,
-});
+function readEnv(name: string): string | undefined {
+  const value = process.env[name]?.trim();
+  return value ? value : undefined;
+}
 
 export async function subscribeToNewsletter(
   _prevState: NewsletterFormState,
   formData: FormData,
 ): Promise<NewsletterFormState> {
-  // Honeypot : vérification avant tout — réponse neutre sans appeler Resend
+  await connection();
+  const headerStore = await headers();
   const website = formData.get("website");
-  const honeypot =
-    typeof website === "string" ? website : website instanceof File ? "file" : null;
-  if (isHoneypotFilled(honeypot)) {
-    return { status: "success", message: "C'est noté, merci !" };
-  }
 
-  const parsed = SubscribeSchema.safeParse({
+  return submitNewsletterSubscription({
     email: formData.get("email"),
     consent: formData.get("consent"),
     source: formData.get("source"),
+    website:
+      typeof website === "string" ? website : website instanceof File ? "file" : null,
+    forwardedFor: headerStore.get("x-forwarded-for"),
+    realIp: headerStore.get("x-real-ip"),
+    env: {
+      RESEND_API_KEY: readEnv("RESEND_API_KEY"),
+      RESEND_AUDIENCE_ID: readEnv("RESEND_AUDIENCE_ID"),
+      RESEND_AUDIENCE_ID_BUILD: readEnv("RESEND_AUDIENCE_ID_BUILD"),
+      RESEND_AUDIENCE_ID_FORMATIONS: readEnv("RESEND_AUDIENCE_ID_FORMATIONS"),
+    },
   });
-
-  if (!parsed.success) {
-    const [firstIssue] = parsed.error.issues;
-    return {
-      status: "error",
-      message: firstIssue?.message ?? "Formulaire invalide.",
-    };
-  }
-
-  const { email, source } = parsed.data;
-  const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = resolveAudienceId(source);
-
-  if (!apiKey || !audienceId) {
-    return {
-      status: "error",
-      message: "L'inscription est momentanément indisponible. Réessaie plus tard.",
-    };
-  }
-
-  const resend = new Resend(apiKey);
-  const { error } = await resend.contacts.create({
-    email,
-    audienceId,
-    unsubscribed: false,
-  });
-
-  if (error) {
-    if (isDuplicateContactError(error)) {
-      return {
-        status: "success",
-        message: "Tu étais déjà inscrit(e). Merci de ton intérêt !",
-      };
-    }
-    return {
-      status: "error",
-      message: "L'inscription a échoué. Réessaie dans un instant.",
-    };
-  }
-
-  return {
-    status: "success",
-    message: "C'est noté, tu es inscrit(e) !",
-  };
 }

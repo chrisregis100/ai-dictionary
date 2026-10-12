@@ -44,7 +44,7 @@ export function LandingHero({ entryCount }: LandingHeroProps) {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href="/outils/dev-hero-build">
+              <Link href="#dev-hero-build">
                 Découvrir Dev Hero Build
                 <ArrowUpRight size={16} strokeWidth={2} aria-hidden />
               </Link>

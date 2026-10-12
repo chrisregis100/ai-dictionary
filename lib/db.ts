@@ -1,3 +1,5 @@
+import "server-only";
+
 import { PrismaNeon } from "@prisma/adapter-neon";
 
 import { PrismaClient } from "@/lib/generated/prisma/client";
@@ -7,8 +9,14 @@ declare global {
   var prismaClient: PrismaClient | undefined;
 }
 
+let cachedClient: PrismaClient | undefined;
+
+export function isDatabaseConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL?.trim());
+}
+
 function createPrismaClient(): PrismaClient {
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = process.env.DATABASE_URL?.trim();
   if (!connectionString) {
     throw new Error("DATABASE_URL n'est pas définie.");
   }
@@ -16,8 +24,16 @@ function createPrismaClient(): PrismaClient {
   return new PrismaClient({ adapter });
 }
 
-export const prisma = globalThis.prismaClient ?? createPrismaClient();
+export function getPrisma(): PrismaClient {
+  if (cachedClient) return cachedClient;
+  if (globalThis.prismaClient) {
+    cachedClient = globalThis.prismaClient;
+    return cachedClient;
+  }
 
-if (process.env.NODE_ENV !== "production") {
-  globalThis.prismaClient = prisma;
+  cachedClient = createPrismaClient();
+  if (process.env.NODE_ENV !== "production") {
+    globalThis.prismaClient = cachedClient;
+  }
+  return cachedClient;
 }

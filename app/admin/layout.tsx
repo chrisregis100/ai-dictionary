@@ -2,10 +2,19 @@ import Link from "next/link";
 import { Suspense } from "react";
 import type { ReactNode } from "react";
 
-import { stackServerApp } from "@/stack";
+import { getStackServerApp, isStackConfigured } from "@/stack";
 
 async function AdminGuard({ children }: { children: ReactNode }) {
-  await stackServerApp.getUser({ or: "redirect" });
+  if (!isStackConfigured()) {
+    return (
+      <p className="rounded-xl border border-border bg-surface px-4 py-6 text-sm text-muted-foreground">
+        L&apos;administration est indisponible : l&apos;authentification n&apos;est
+        pas configurée.
+      </p>
+    );
+  }
+
+  await getStackServerApp().getUser({ or: "redirect" });
   return <>{children}</>;
 }
 

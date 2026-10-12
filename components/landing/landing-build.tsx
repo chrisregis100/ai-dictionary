@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight } from "@deemlol/next-icons";
+import { ArrowRight } from "@deemlol/next-icons";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -44,7 +44,10 @@ const steps = [
 
 export function LandingBuild() {
   return (
-    <section className="border-b border-border bg-surface/40">
+    <section
+      id="dev-hero-build"
+      className="scroll-mt-20 border-b border-border bg-surface/40"
+    >
       <div className="mx-auto w-full max-w-6xl px-4 py-16 lg:px-6 lg:py-24">
         <div className="mb-10 max-w-2xl space-y-3">
           <p className="flex flex-wrap items-center gap-2 font-mono text-sm text-accent">
@@ -55,10 +58,11 @@ export function LandingBuild() {
             Une Software Factory méthodique.
           </h2>
           <p className="text-muted-foreground text-pretty">
-            Dev Hero Build n&apos;est pas encore disponible : la page produit
-            détaille la méthode et ouvre une liste d&apos;attente, sans
-            promesse de disponibilité immédiate. En attendant, la rigueur du
-            cycle s&apos;applique déjà à chaque fiche du dictionnaire.
+            Dev Hero Build n&apos;est pas encore disponible. La méthode est
+            décrite ci-dessous ; la liste d&apos;attente sert à être prévenu du
+            lancement, sans promesse de disponibilité immédiate. En attendant,
+            la rigueur du cycle s&apos;applique déjà à chaque fiche du
+            dictionnaire.
           </p>
         </div>
         <ol className="grid gap-2">
@@ -82,14 +86,8 @@ export function LandingBuild() {
             </li>
           ))}
         </ol>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
+        <div className="mt-8">
           <Button asChild size="lg">
-            <Link href="/outils/dev-hero-build">
-              Découvrir Dev Hero Build
-              <ArrowUpRight size={16} strokeWidth={2} aria-hidden />
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg">
             <Link href="/newsletter?source=build">
               Être prévenu du lancement
               <ArrowRight size={16} strokeWidth={2} aria-hidden />
