@@ -4,6 +4,7 @@ import { Check, Copy } from "@deemlol/next-icons";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 interface CopyPageButtonProps {
   markdown: string;
@@ -19,6 +20,7 @@ export function CopyPageButton({ markdown }: CopyPageButtonProps) {
   }, [status]);
 
   const handleCopy = async () => {
+    trackEvent(ANALYTICS_EVENTS.ctaClick, { action: "copy_page" });
     try {
       await navigator.clipboard.writeText(markdown);
       setStatus("copied");

@@ -5,17 +5,25 @@ import type { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-clay text-on-clay hover:bg-clay-deep",
-        quiet: "bg-card text-ink ring-1 ring-line hover:bg-paper-sand",
-        sage: "bg-sage text-on-sage hover:bg-sage-bright",
+        default:
+          "bg-accent text-accent-foreground hover:bg-accent-hover",
+        quiet:
+          "border border-border bg-background text-foreground hover:bg-surface",
+        sage: "bg-foreground text-background hover:opacity-90",
+        outline:
+          "border border-border bg-transparent text-foreground hover:bg-surface",
+        ghost: "text-foreground hover:bg-surface",
+        link: "text-accent underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-11 px-4 text-sm",
+        default: "h-10 px-4 text-sm",
         sm: "h-8 px-3 text-xs",
+        lg: "h-12 px-5 text-base",
+        icon: "size-9",
       },
     },
     defaultVariants: {
@@ -46,3 +54,5 @@ export function Button({
     />
   );
 }
+
+export { buttonVariants };

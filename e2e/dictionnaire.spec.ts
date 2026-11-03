@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("filtre l'accueil puis ouvre une fiche", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/dictionnaire");
   await expect(
     page.getByRole("heading", {
       level: 1,

@@ -64,15 +64,6 @@ export function getEntry(slug: string): DictionaryEntry | undefined {
   return getEntries().find((entry) => entry.slug === slug);
 }
 
-export function getEntriesForSection(sectionId: SectionId): DictionaryEntry[] {
-  const section = sectionById(sectionId);
-  const bySlug = new Map(getEntries().map((entry) => [entry.slug, entry]));
-  return section.terms.flatMap((slug) => {
-    const entry = bySlug.get(slug);
-    return entry ? [entry] : [];
-  });
-}
-
 export function getSearchEntries(): SearchEntry[] {
   return getEntries().map((entry) => ({
     slug: entry.slug,

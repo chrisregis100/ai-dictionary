@@ -1,12 +1,13 @@
 "use client";
 
 import { ArrowUpRight, Search, X } from "@deemlol/next-icons";
-import Link from "next/link";
 import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useMemo, useState } from "react";
 
+import { TermLink } from "@/components/analytics/term-link";
 import { Input } from "@/components/ui/input";
 import { filterEntries } from "@/lib/search";
+import { useTrackSearch } from "@/lib/use-track-search";
 import { cn } from "@/lib/utils";
 
 export interface DictionaryCardEntry {
@@ -57,6 +58,7 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
     0,
   );
   const trimmedQuery = query.trim();
+  useTrackSearch(trimmedQuery, resultCount);
 
   useEffect(() => {
     const headings = filtered
@@ -89,9 +91,9 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-line bg-card">
+    <div className="overflow-hidden rounded-xl border border-border bg-card">
       <div className="lg:grid lg:grid-cols-[17.5rem_minmax(0,1fr)]">
-        <aside className="border-b border-line lg:sticky lg:top-16 lg:z-10 lg:self-start lg:border-r lg:border-b-0 lg:bg-card">
+        <aside className="border-b border-border lg:sticky lg:top-14 lg:z-10 lg:self-start lg:border-r lg:border-b-0 lg:bg-card">
           <div className="space-y-4 p-4 lg:max-h-[calc(100vh-4.5rem)] lg:overflow-y-auto">
             <form
               role="search"
@@ -104,7 +106,7 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
               <Search
                 size={16}
                 strokeWidth={1.75}
-                className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-sage"
+                className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
                 aria-hidden
               />
               <Input
@@ -115,13 +117,13 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
                 placeholder="Chercher dans le dictionnaire…"
                 autoComplete="off"
                 onChange={(event) => handleChange(event.target.value)}
-                className="h-10 rounded-xl pr-10 pl-10 text-sm"
+                className="h-10 rounded-lg pr-10 pl-10 text-sm"
               />
               {trimmedQuery ? (
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full p-1 text-muted transition-colors hover:text-ink"
+                  className="absolute top-1/2 right-2 -translate-y-1/2 rounded-md p-1 text-muted-foreground transition-colors hover:text-foreground"
                   aria-label="Effacer la recherche"
                 >
                   <X size={14} strokeWidth={2} aria-hidden />
@@ -129,12 +131,12 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
               ) : null}
             </form>
             {trimmedQuery ? (
-              <p className="text-sm text-muted" aria-live="polite">
+              <p className="text-sm text-muted-foreground" aria-live="polite">
                 {resultPhrase(resultCount, trimmedQuery)}
               </p>
             ) : null}
             {filtered.length > 0 ? (
-              <p className="text-[0.65rem] font-medium tracking-[0.2em] text-muted uppercase">
+              <p className="text-[0.65rem] font-medium tracking-widest text-muted-foreground uppercase">
                 Sections
               </p>
             ) : null}
@@ -153,17 +155,17 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
                         className={cn(
                           "flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 font-mono text-sm whitespace-nowrap transition-colors",
                           isActive
-                            ? "bg-paper-sand text-ink"
-                            : "text-muted hover:bg-paper-sand hover:text-ink",
+                            ? "bg-surface text-foreground"
+                            : "text-muted-foreground hover:bg-surface hover:text-foreground",
                         )}
                       >
                         <span>
-                          <span aria-hidden className="text-clay">
+                          <span aria-hidden className="text-accent">
                             #
                           </span>{" "}
                           {section.title}
                         </span>
-                        <span className="hidden text-xs text-muted lg:inline">
+                        <span className="hidden text-xs text-muted-foreground lg:inline">
                           {section.entries.length}
                         </span>
                       </a>
@@ -177,20 +179,20 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
 
         <div className="min-w-0">
           {filtered.length === 0 ? (
-            <p className="px-5 py-12 text-sm text-muted" aria-live="polite">
+            <p className="px-5 py-12 text-sm text-muted-foreground" aria-live="polite">
               Aucune notion pour « {trimmedQuery} ».
             </p>
           ) : (
             filtered.map((section) => (
               <section key={section.id} aria-labelledby={section.id}>
-                <div className="flex items-end justify-between gap-4 border-b border-line px-5 py-6">
+                <div className="flex items-end justify-between gap-4 border-b border-border px-5 py-6">
                   <h2
                     id={section.id}
-                    className="scroll-mt-24 font-serif text-2xl tracking-[-0.02em] text-ink md:text-3xl"
+                    className="scroll-mt-24 text-2xl font-semibold tracking-tight text-foreground md:text-3xl"
                   >
                     {section.title}
                   </h2>
-                  <p className="shrink-0 text-[0.65rem] font-medium tracking-[0.18em] text-muted uppercase">
+                  <p className="shrink-0 text-[0.65rem] font-medium tracking-widest text-muted-foreground uppercase">
                     {notionCountLabel(section.entries.length)}
                   </p>
                 </div>
@@ -198,32 +200,33 @@ export function DictionaryBrowser({ sections }: DictionaryBrowserProps) {
                   {section.entries.map((entry) => (
                     <li
                       key={entry.slug}
-                      className="border-b border-line md:odd:border-r"
+                      className="border-b border-border md:odd:border-r"
                     >
-                      <Link
-                        href={`/notions/${entry.slug}`}
+                      <TermLink
+                        term={entry.term}
+                        slug={entry.slug}
                         aria-label={entry.term}
                         aria-describedby={`desc-${entry.slug}`}
-                        className="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-paper-sand motion-reduce:transition-none"
+                        className="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-surface motion-reduce:transition-none"
                       >
                         <span className="flex items-start justify-between gap-3">
-                          <span className="text-xl font-semibold text-ink">
+                          <span className="text-xl font-semibold tracking-tight text-foreground">
                             {entry.term}
                           </span>
                           <ArrowUpRight
                             size={16}
                             strokeWidth={1.75}
-                            className="mt-1 shrink-0 text-muted group-hover:text-clay"
+                            className="mt-1 shrink-0 text-muted-foreground group-hover:text-accent"
                             aria-hidden
                           />
                         </span>
                         <span
                           id={`desc-${entry.slug}`}
-                          className="text-sm leading-6 text-muted"
+                          className="text-sm leading-6 text-muted-foreground"
                         >
                           {entry.description}
                         </span>
-                      </Link>
+                      </TermLink>
                     </li>
                   ))}
                 </ul>
